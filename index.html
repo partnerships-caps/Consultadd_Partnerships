@@ -1,0 +1,3164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Technology Partnership Intelligence — Consultadd Public Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --navy:#0D2B5E;--navy2:#1A3D7C;--navy3:#2E5499;--navy4:#4472C4;
+  --blue-light:#EBF1FB;--blue-mid:#C2D3F2;--blue-pale:#F0F5FF;
+  --white:#fff;--bg:#F0F4FA;--surf:#fff;--surf2:#F7F9FF;
+  --border:#DDE4F0;--border2:#C5D0E8;
+  --txt:#0F1729;--txt2:#344060;--txt3:#6B7A99;--txt4:#A8B4CC;
+  --green:#057A50;--green-bg:#EDFAF5;--green-bd:#9FE2C8;
+  --orange:#C96A00;--orange-bg:#FFF8ED;--orange-bd:#F5C878;
+  --red:#B91C1C;--red-bg:#FEF2F2;--red-bd:#F5AAAA;
+  --purple:#5B21B6;--purple-bg:#F5F3FF;--purple-bd:#C4B5FD;
+  --gray:#6B7280;--gray-bg:#F8F9FB;--gray-bd:#DDE4F0;
+  --sw:232px;--hh:56px;--r:8px;--r2:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);font-size:13px;line-height:1.5}
+a{color:var(--navy4);text-decoration:none}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+.app{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:var(--sw);background:var(--navy);position:fixed;top:0;left:0;height:100vh;z-index:200;display:flex;flex-direction:column}
+.sb-brand{padding:14px 16px 12px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:9px;min-height:var(--hh)}
+.sb-logo{height:20px;filter:brightness(0)invert(1);flex-shrink:0}
+.sb-brandlabel{font-size:10px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.05em;text-transform:uppercase;line-height:1.3}
+.sb-nav{flex:1;padding:8px 0;overflow-y:auto}
+.sb-group{padding:10px 14px 3px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28)}
+.sb-item{display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.6);border-left:3px solid transparent;margin:1px 0;transition:all .1s}
+.sb-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.sb-item.active{background:rgba(255,255,255,.1);color:#fff;border-left-color:#7EB6FF}
+.sb-item .ic{font-size:13px;width:16px;text-align:center;flex-shrink:0}
+.sb-badge{margin-left:auto;font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:10px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+.sb-badge.hot{background:#B91C1C;color:#fff}
+.sb-badge.warn{background:#C96A00;color:#fff}
+.sb-foot{padding:11px 14px;border-top:1px solid rgba(255,255,255,.07);font-size:10px;color:rgba(255,255,255,.28);line-height:1.6}
+.sb-foot strong{color:rgba(255,255,255,.45)}
+
+/* MAIN */
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{background:var(--surf);border-bottom:1px solid var(--border);padding:0 22px;height:var(--hh);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:10px}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.page-label{font-size:15px;font-weight:700;color:var(--navy)}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.tb-chip{display:flex;align-items:center;gap:5px;background:var(--surf2);border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:11.5px;color:var(--txt2)}
+.tb-chip strong{font-weight:700}
+.tb-chip.g strong{color:var(--green)}
+.tb-chip.o strong{color:var(--orange)}
+.tb-chip.r strong{color:var(--red)}
+.tb-chip.p strong{color:var(--purple)}
+.tb-divider{width:1px;height:18px;background:var(--border)}
+.ts-label{font-size:10.5px;color:var(--txt4)}
+
+.content{padding:20px 22px;flex:1}
+.sec{display:none}.sec.active{display:block}
+.pg-hd{margin-bottom:18px}
+.pg-hd h2{font-size:18px;font-weight:700;color:var(--navy)}
+.pg-hd p{font-size:12px;color:var(--txt3);margin-top:3px}
+
+/* KPI CARDS */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:18px}
+.kpi{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:14px 15px;position:relative;overflow:hidden}
+.kpi-bar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r2) var(--r2) 0 0}
+.kpi-bar.green{background:var(--green)}.kpi-bar.navy{background:var(--navy)}.kpi-bar.orange{background:var(--orange)}.kpi-bar.red{background:var(--red)}.kpi-bar.purple{background:var(--purple)}
+.kpi-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt3);margin-bottom:5px}
+.kpi-val{font-size:28px;font-weight:800;color:var(--navy);line-height:1}
+.kpi-sub{font-size:10px;color:var(--txt4);margin-top:4px}
+
+/* HEALTH BANNER */
+.health-banner{background:var(--navy);border-radius:var(--r2);padding:18px 22px;margin-bottom:18px;display:flex;align-items:stretch;gap:18px;position:relative;overflow:hidden}
+.health-ring{flex-shrink:0;width:76px;height:76px;border-radius:50%;border:3px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-direction:column}
+.health-num{font-size:22px;font-weight:800;color:#fff;line-height:1}
+.health-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.45);margin-top:1px}
+.health-body{flex:1;min-width:0}
+.health-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.health-txt{font-size:12px;color:rgba(255,255,255,.78);line-height:1.6}
+.health-acts{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.btn-ghost{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;border-radius:var(--r);padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.btn-ghost:hover{background:rgba(255,255,255,.16)}
+.health-stats{display:flex;flex-direction:column;gap:7px;justify-content:center;flex-shrink:0;min-width:140px}
+.hs-item{background:rgba(255,255,255,.07);border-radius:var(--r);padding:7px 11px}
+.hs-v{font-size:16px;font-weight:800;color:#fff}
+.hs-l{font-size:9.5px;color:rgba(255,255,255,.5);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+
+/* CHARTS */
+.charts3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+.chart-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:16px}
+.cc-hd{margin-bottom:11px}
+.cc-title{font-size:12.5px;font-weight:700;color:var(--navy)}
+.cc-sub{font-size:10.5px;color:var(--txt3);margin-top:2px}
+.legend{display:flex;flex-wrap:wrap;gap:9px;font-size:10.5px;margin-bottom:9px}
+.legend-i{display:flex;align-items:center;gap:4px;color:var(--txt2)}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* CARD */
+.card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:18px}
+.card-hd{padding:13px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px}
+.card-title{font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:7px}
+.card-cnt{background:var(--navy);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px}
+.card-ctrls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+
+/* CONTROLS */
+.inp-search{border:1px solid var(--border);border-radius:var(--r);padding:6px 10px;font-size:12px;font-family:inherit;color:var(--txt);background:var(--surf2);width:200px;outline:none}
+.inp-search:focus{border-color:var(--navy4);background:#fff}
+.sel{border:1px solid var(--border);border-radius:var(--r);padding:6px 10px;font-size:12px;font-family:inherit;color:var(--txt);background:var(--surf2);outline:none;cursor:pointer}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{background:var(--surf2);text-align:left;padding:8px 13px;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);border-bottom:1px solid var(--border);cursor:pointer;white-space:nowrap;user-select:none}
+th:hover{color:var(--navy)}
+td{padding:9px 13px;font-size:12px;border-bottom:1px solid var(--border2);color:var(--txt);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--blue-pale)}
+.exp-content{padding:13px 17px;background:var(--surf2);border-top:1px solid var(--border)}
+.exp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.exp-f label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt3);display:block;margin-bottom:3px}
+.exp-f span{font-size:12px;color:var(--txt)}
+.sol-pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.sol-pill{font-size:10.5px;background:var(--blue-pale);color:var(--navy3);border:1px solid var(--blue-mid);border-radius:20px;padding:2px 10px}
+.hs-link-btn{display:inline-flex;align-items:center;gap:5px;background:var(--navy);color:#fff;border:none;border-radius:var(--r);padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap}
+.hs-link-btn:hover{background:var(--navy2);color:#fff}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:10.5px;font-weight:600;white-space:nowrap}
+.badge.approved{background:var(--green-bg);color:#065F46;border:1px solid var(--green-bd)}
+.badge.form-filled{background:var(--orange-bg);color:#92400E;border:1px solid var(--orange-bd)}
+.badge.pursuing{background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE}
+.badge.denied{background:var(--red-bg);color:#991B1B;border:1px solid var(--red-bd)}
+.badge.not-started{background:var(--gray-bg);color:#374151;border:1px solid var(--gray-bd)}
+.badge.critical{background:var(--red-bg);color:#991B1B;border:1px solid var(--red-bd)}
+.badge.high{background:var(--orange-bg);color:#92400E;border:1px solid var(--orange-bd)}
+.badge.medium{background:var(--green-bg);color:#065F46;border:1px solid var(--green-bd)}
+.badge.cots{background:var(--purple-bg);color:#5B21B6;border:1px solid var(--purple-bd)}
+
+/* SOLUTIONS LIBRARY */
+.sol-search-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;align-items:center}
+.sol-big-search{border:1.5px solid var(--border);border-radius:var(--r2);padding:11px 16px;font-size:14px;font-family:inherit;color:var(--txt);background:var(--surf);width:100%;max-width:560px;outline:none;transition:border .12s}
+.sol-big-search:focus{border-color:var(--navy4)}
+.sol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.sol-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:16px;cursor:pointer;transition:box-shadow .12s;position:relative}
+.sol-card:hover{box-shadow:0 4px 16px rgba(13,43,94,.1);border-color:var(--blue-mid)}
+.sol-card.expanded{border-color:var(--navy4);box-shadow:0 4px 20px rgba(13,43,94,.12)}
+.sol-card-name{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.sol-card-cat{font-size:10.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:10px}
+.sol-partner-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)}
+.sol-partner-row:last-child{border-bottom:none}
+.sol-partner-name{font-size:12px;font-weight:600;color:var(--txt)}
+.sol-partner-product{font-size:11px;color:var(--txt3)}
+.sol-expand-body{margin-top:12px;padding-top:12px;border-top:2px solid var(--blue-mid);display:none}
+.sol-card.expanded .sol-expand-body{display:block}
+.sol-detail-desc{font-size:12px;color:var(--txt2);line-height:1.6;margin-bottom:10px}
+.sol-detail-links{display:flex;gap:8px;flex-wrap:wrap}
+.sol-hs-link{display:inline-flex;align-items:center;gap:5px;background:var(--navy);color:#fff;border-radius:var(--r);padding:5px 12px;font-size:11px;font-weight:600;text-decoration:none}
+.sol-hs-link:hover{background:var(--navy2);color:#fff}
+.sol-no-results{text-align:center;padding:3rem;color:var(--txt3);grid-column:1/-1}
+.sol-filters-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.filter-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--txt2);transition:all .1s}
+.filter-chip:hover,.filter-chip.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.sol-result-count{font-size:11.5px;color:var(--txt3);margin-left:auto}
+
+/* PARTNER CARDS (Browse by Stage) */
+.stage-section{margin-bottom:24px}
+.stage-title{font-size:13px;font-weight:700;color:var(--navy);padding:8px 0;margin-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+.partner-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.partner-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;transition:box-shadow .12s}
+.partner-card:hover{box-shadow:0 3px 12px rgba(13,43,94,.08)}
+.pc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.pc-name{font-size:13px;font-weight:700;color:var(--navy)}
+.pc-cat{font-size:10.5px;color:var(--txt3);margin-bottom:8px}
+.pc-desc{font-size:11.5px;color:var(--txt2);line-height:1.55;margin-bottom:10px}
+.pc-solutions{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.pc-sol{font-size:10px;background:var(--blue-pale);color:var(--navy3);border:1px solid var(--blue-mid);border-radius:20px;padding:1px 8px}
+.pc-footer{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border)}
+
+/* RFP GAP */
+.impact-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:16px}
+.ist{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:13px 15px}
+.ist-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt3)}
+.ist-val{font-size:22px;font-weight:800;color:var(--navy);margin-top:4px}
+.ist-note{font-size:10px;color:var(--txt4);margin-top:3px}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:36px;color:var(--txt3)}
+
+@media(max-width:1200px){.kpi-row{grid-template-columns:repeat(3,1fr)}.charts3{grid-template-columns:1fr}.sol-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sb-brand">
+    <img class="sb-logo" src="https://cdn.prod.website-files.com/66bd92ba405be0a023df7529/697b02c8e2bee0d5f7d6665e_cp-nav-logo.svg" alt="Consultadd" onerror="this.style.display='none'">
+    <div class="sb-brandlabel">Partnership<br>Intelligence</div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-group">Main</div>
+    <div class="sb-item active" onclick="nav('overview')"><span class="ic">◈</span> Executive Overview</div>
+    <div class="sb-group">Partnership Intelligence</div>
+    <div class="sb-item" onclick="nav('browse')"><span class="ic">☰</span> Partnership Directory <span class="sb-badge" id="nb-total">—</span></div>
+    <div class="sb-item" onclick="nav('solutions')"><span class="ic">◉</span> Solution Center</div>
+    <div class="sb-item" onclick="nav('rfp')"><span class="ic">◎</span> Partnership Gap &amp; Revenue Impact</div>
+    <div class="sb-group">Resources</div>
+    <div class="sb-item" onclick="nav('niche')"><span class="ic">✦</span> Emerging RFP Categories <span class="sb-badge warn" id="nb-niche">—</span></div>
+  </div>
+  <div class="sb-foot"><strong>Consultadd Public Services</strong><br>Internal Use Only · 2026<br><span id="ts-label">—</span></div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="page-label" id="pg-label">Executive Overview</div>
+    </div>
+    <div class="topbar-right">
+      <div class="tb-chip g">Completed <strong id="tb-comp">—</strong></div>
+      <div class="tb-chip o">In Process <strong id="tb-proc">—</strong></div>
+      <div class="tb-chip">Applied <strong id="tb-appl">—</strong></div>
+      <div class="tb-chip r">Rejected <strong id="tb-rej">—</strong></div>
+      <div class="tb-divider"></div>
+      <div class="ts-label" id="ts">—</div>
+      <div id="freshness-badge" style="display:none;font-size:10px;background:#FFF8ED;border:1px solid #F5C878;border-radius:20px;padding:2px 9px;color:#92400E;font-weight:600;cursor:pointer" onclick="nav('overview')" title="Click to see details">
+        ⚡ Live from HubSpot
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+  <!-- OVERVIEW -->
+  <section class="sec active" id="sec-overview">
+    <div class="pg-hd"><h2>Partnership Portfolio Overview</h2><p>Live data from Consultadd Public Services HubSpot OEM Partnership Pipeline</p></div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-bar green"></div><div class="kpi-lbl">Completed Partnerships</div><div class="kpi-val" id="k-comp">—</div><div class="kpi-sub">Active &amp; ready to bid</div></div>
+      <div class="kpi"><div class="kpi-bar orange"></div><div class="kpi-lbl">In Process</div><div class="kpi-val" id="k-proc">—</div><div class="kpi-sub">Applications underway</div></div>
+      <div class="kpi"><div class="kpi-bar navy"></div><div class="kpi-lbl">Applied</div><div class="kpi-val" id="k-appl">—</div><div class="kpi-sub">Awaiting response</div></div>
+      <div class="kpi"><div class="kpi-bar red"></div><div class="kpi-lbl">Rejected</div><div class="kpi-val" id="k-rej">—</div><div class="kpi-sub">Closed / not proceeding</div></div>
+      <div class="kpi"><div class="kpi-bar purple"></div><div class="kpi-lbl">RFPs Missed (Running Total)</div><div class="kpi-val">315+</div><div class="kpi-sub">Confirmed partner-gap rejections</div></div>
+    </div>
+
+    <div class="health-banner">
+      <div class="health-ring"><div class="health-num" id="h-num">—</div><div class="health-lbl">/ 100</div></div>
+      <div class="health-body">
+        <div class="health-title">Partnership Portfolio Health Score</div>
+        <div class="health-txt" id="h-txt">Score is based on completed partnerships as a proportion of total tracked, weighted against rejection rate. Updated automatically from live HubSpot data every time the dashboard loads.</div>
+        <div class="health-acts">
+          <button class="btn-ghost" onclick="nav('browse')">Browse All Partners →</button>
+          <button class="btn-ghost" onclick="nav('solutions')">Solution Center →</button>
+          <button class="btn-ghost" onclick="nav('rfp')">Revenue Impact →</button>
+        </div>
+      </div>
+      <div class="health-stats">
+        <div class="hs-item"><div class="hs-v" id="hs-total">—</div><div class="hs-l">Total Partners</div></div>
+        <div class="hs-item"><div class="hs-v">2,082</div><div class="hs-l">Not Qualified RFPs</div></div>
+        <div class="hs-item"><div class="hs-v">$48M+</div><div class="hs-l">Pipeline at Risk</div></div>
+      </div>
+    </div>
+
+    <div class="charts3">
+      <div class="chart-card">
+        <div class="cc-hd"><div class="cc-title">Partnership Status Breakdown</div><div class="cc-sub">Portfolio composition by stage</div></div>
+        <div class="legend" id="lg-donut"></div>
+        <div style="position:relative;height:200px"><canvas id="c-donut"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="cc-hd"><div class="cc-title">Partners by Category</div><div class="cc-sub">Technology partners per domain</div></div>
+        <div style="position:relative;height:240px"><canvas id="c-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="cc-hd"><div class="cc-title">Top Partnership Gaps by Missed RFPs</div><div class="cc-sub">Running total per missing partner</div></div>
+        <div style="position:relative;height:280px"><canvas id="c-hbar"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BROWSE / PARTNERSHIP DIRECTORY -->
+  <section class="sec" id="sec-browse">
+    <div class="pg-hd"><h2>Partnership Directory</h2><p>All technology partnerships from HubSpot — browse by stage or search</p></div>
+    <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+      <input type="text" class="inp-search" id="browse-q" placeholder="Search by name, category, solution…" oninput="renderBrowse()" style="width:260px">
+      <select class="sel" id="browse-stage" onchange="renderBrowse()">
+        <option value="">All Stages</option>
+        <option value="3">Completed</option>
+        <option value="2">In Process</option>
+        <option value="1">Applied</option>
+        <option value="4">Rejected</option>
+      </select>
+      <select class="sel" id="browse-cat" onchange="renderBrowse()">
+        <option value="">All Categories</option>
+      </select>
+      <span style="font-size:11.5px;color:var(--txt3)">Showing <strong id="browse-cnt">—</strong> partners</span>
+    </div>
+    <div id="browse-grid" class="partner-grid"></div>
+  </section>
+
+  <!-- FIND BY SOLUTION -->
+  <section class="sec" id="sec-solutions">
+    <div class="pg-hd"><h2>Solution Center</h2><p>Search for any solution, technology, or capability — see all partners that offer it and their status</p></div>
+    <div class="sol-search-bar">
+      <input type="text" class="sol-big-search" id="sol-q" placeholder='Search e.g. "SIEM", "endpoint backup", "identity management", "vulnerability scanning", "cloud storage"…' oninput="renderSol()">
+    </div>
+    <div class="sol-filters-bar" id="sol-cat-filters"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <span style="font-size:11.5px;color:var(--txt3)">Showing <strong id="sol-count">—</strong> solution categories &nbsp;·&nbsp; Click any card to expand full details + HubSpot link</span>
+      <select class="sel" id="sol-pstat" onchange="renderSol()">
+        <option value="">All partnership statuses</option>
+        <option value="3">Completed only</option>
+        <option value="2">In Process only</option>
+        <option value="1">Applied only</option>
+      </select>
+    </div>
+    <div class="sol-grid" id="sol-grid"></div>
+  </section>
+
+  <!-- RFP GAP ANALYSIS -->
+  <section class="sec" id="sec-rfp">
+    <div class="pg-hd"><h2>Partnership Gap &amp; Revenue Impact</h2><p>Quantified business impact of missing partnerships — based on HubSpot Not Qualified queue analysis</p></div>
+    <div class="impact-stats">
+      <div class="ist"><div class="ist-lbl">Total Missed RFPs</div><div class="ist-val">315+</div><div class="ist-note">Confirmed partner-gap rejections</div></div>
+      <div class="ist"><div class="ist-lbl">Core Gap Value</div><div class="ist-val">$32M+</div><div class="ist-note">Major partner categories</div></div>
+      <div class="ist"><div class="ist-lbl">Niche Category Value</div><div class="ist-val">$16M+</div><div class="ist-note">Emerging solution gaps</div></div>
+      <div class="ist" style="border-color:var(--red-bd)"><div class="ist-lbl">Total Opportunity Value</div><div class="ist-val" style="color:var(--red)">$48M+</div><div class="ist-note">Not booked revenue — opportunity value</div></div>
+    </div>
+    <div class="card">
+      <div class="card-hd">
+        <div class="card-title">Gap Analysis by Category</div>
+        <div class="card-ctrls">
+          <select class="sel" id="rfp-pf" onchange="renderRFP()">
+            <option value="">All Priorities</option>
+            <option>Critical</option><option>High</option><option>Medium</option>
+          </select>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th onclick="sRFP('category')">RFP Category ↕</th>
+            <th>Missing Partnership</th>
+            <th onclick="sRFP('missed')">Missed RFPs ↕</th>
+            <th onclick="sRFP('revenue')">Est. Opportunity Value ↕</th>
+            <th onclick="sRFP('priority')">Priority ↕</th>
+            <th>Recommended Action</th>
+          </tr></thead>
+          <tbody id="rfp-tbody"></tbody>
+          <tfoot>
+  <tr style="background:var(--blue-pale);font-weight:700">
+    <td colspan="2" style="font-size:12px;color:var(--navy)">Subtotal — Shown Categories</td>
+    <td id="rfp-tot-r" style="font-size:14px;font-weight:800;color:var(--navy)">—</td>
+    <td id="rfp-tot-v" style="font-size:13px;font-weight:800;color:var(--red)">—</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr style="background:var(--orange-bg)">
+    <td colspan="2" style="font-size:12px;color:var(--orange);font-weight:700">Niche / Emerging RFP Categories (35 categories tracked)</td>
+    <td style="font-size:14px;font-weight:800;color:var(--orange)">120+</td>
+    <td style="font-size:13px;font-weight:800;color:var(--orange)">$16M+</td>
+    <td colspan="2"><span style="font-size:11px;color:var(--orange)">RFPs lost because solution required a niche COTS product — see Emerging RFP Categories tab</span></td>
+  </tr>
+  <tr style="background:var(--red-bg);font-weight:700;border-top:2px solid var(--red-bd)">
+    <td colspan="2" style="font-size:12px;color:var(--red);font-weight:800">GRAND TOTAL — All Partnership Gaps</td>
+    <td style="font-size:15px;font-weight:800;color:var(--red)">315+</td>
+    <td style="font-size:14px;font-weight:800;color:var(--red)">$48M+</td>
+    <td colspan="2"><span style="font-size:11px;color:var(--red)">Total confirmed partner-gap rejections across all categories + niche solutions</span></td>
+  </tr>
+</tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMERGING RFP CATEGORIES -->
+  <section class="sec" id="sec-niche">
+    <div class="pg-hd"><h2>Emerging RFP Categories</h2><p>35 niche RFP categories identified from the HubSpot Not Qualified queue — recommended vendor partnerships to pursue</p></div>
+    <div style="display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap">
+      <input type="text" class="inp-search" id="niche-q" placeholder="Search categories or vendors…" oninput="renderNiche()" style="width:260px">
+      <span style="font-size:11.5px;color:var(--txt3)">Showing <strong id="niche-count">—</strong> categories</span>
+    </div>
+    <div class="niche-grid" id="niche-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px"></div>
+  </section>
+
+  </div>
+</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// CAPS Partnership Intelligence — Partner Data File
+// Source: HubSpot OEM Partnership Pipeline
+// Pipeline: OEM Partnership Pipeline (ID: 0)
+// Stages: 1=Applied, 2=In Process, 3=Completed, 4=Rejected
+//
+// SNAPSHOT TIMESTAMP: 2026-05-20T16:35:17Z
+// LAST HUBSPOT CHANGE: 2026-05-08T15:07:48.315Z
+// TOTAL RECORDS: 80
+//
+// HOW TO REFRESH:
+// Go to Claude.ai → open your CAPS partnership conversation
+// Type: "Refresh the partnership dashboard with the latest HubSpot data"
+// Claude will pull changes since 2026-05-08T15:07:48.315Z and give you an updated data.js
+// Replace ONLY this file on GitHub — index.html stays unchanged.
+// ═══════════════════════════════════════════════════════════════
+
+const CAPS_DATA_SNAPSHOT_TS = "2026-05-20T16:35:17Z";
+const CAPS_HS_LAST_MODIFIED  = "2026-05-08T15:07:48.315Z";
+const CAPS_TOTAL_RECORDS     = 80;
+
+const HS_PARTNERS = [
+  {
+    "id": "305110128363",
+    "name": "Veeam",
+    "stage": "3",
+    "lastModified": "2026-05-08T15:07:48.315Z",
+    "created": "2026-03-31T14:40:07.802Z",
+    "desc": "Veeam provides backup, disaster recovery, and data management solutions for virtual, cloud, and hybrid environments.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Backup & Replication",
+      "Disaster Recovery",
+      "Cloud Data Management",
+      "Virtual Machine Backup",
+      "Ransomware Protection",
+      "Microsoft 365 Backup"
+    ]
+  },
+  {
+    "id": "305206771449",
+    "name": "Fortinet",
+    "stage": "3",
+    "lastModified": "2026-05-08T15:07:24.405Z",
+    "created": "2026-03-31T14:38:25.455Z",
+    "desc": "Fortinet provides cybersecurity solutions including firewalls, secure networking, and threat protection across enterprise environments.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Next-Generation Firewall (NGFW)",
+      "Secure SD-WAN",
+      "Endpoint Detection & Response (EDR)",
+      "Zero Trust Network Access (ZTNA)",
+      "SIEM & Analytics",
+      "FortiSASE"
+    ]
+  },
+  {
+    "id": "305379429086",
+    "name": "Watchguard Technologies",
+    "stage": "3",
+    "lastModified": "2026-05-08T15:07:00.243Z",
+    "created": "2026-03-31T15:09:39.130Z",
+    "desc": "WatchGuard provides network security, endpoint protection, and multi-factor authentication solutions.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Next-Generation Firewall (NGFW)",
+      "Endpoint Detection & Response (EDR)",
+      "Multi-Factor Authentication (MFA)",
+      "Wi-Fi Security",
+      "Zero Trust Endpoint"
+    ]
+  },
+  {
+    "id": "303033039555",
+    "name": "Nuologix",
+    "stage": "3",
+    "lastModified": "2026-05-07T11:08:59.049Z",
+    "created": "2026-03-16T11:32:46.306Z",
+    "desc": "Distributor specific to ManageEngine products.",
+    "cat": "Distributors",
+    "solutions": [
+      "ManageEngine Product Distribution",
+      "IT Solutions Procurement"
+    ]
+  },
+  {
+    "id": "302984649416",
+    "name": "Carahsoft",
+    "stage": "3",
+    "lastModified": "2026-05-07T11:08:23.290Z",
+    "created": "2026-03-16T11:18:30.243Z",
+    "desc": "Carahsoft is a government IT marketplace and distributor serving federal, state, and local government agencies.",
+    "cat": "Distributors",
+    "solutions": [
+      "Government IT Marketplace",
+      "Software Licensing for Government",
+      "Hardware Procurement",
+      "Cloud Solutions for Government"
+    ]
+  },
+  {
+    "id": "302487325431",
+    "name": "Rubrik",
+    "stage": "3",
+    "lastModified": "2026-05-07T11:08:01.492Z",
+    "created": "2026-03-10T17:19:54.552Z",
+    "desc": "Rubrik is a cybersecurity company specializing in Zero Trust Data Security to protect enterprise, cloud, and SaaS data.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Zero Trust Data Security",
+      "Backup & Recovery",
+      "Ransomware Protection",
+      "Cloud Data Security",
+      "SaaS Data Protection"
+    ]
+  },
+  {
+    "id": "304982892243",
+    "name": "ServiceNow",
+    "stage": "3",
+    "lastModified": "2026-04-24T10:51:55.392Z",
+    "created": "2026-03-30T17:35:18.911Z",
+    "desc": "ServiceNow is a cloud-based platform that enables organizations to automate workflows across IT service management, IT operations, HR, customer service, and enterprise processes.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "IT Service Management (ITSM)",
+      "IT Operations Management (ITOM)",
+      "HR Service Delivery",
+      "Security Operations",
+      "GRC",
+      "App Engine (Low-Code)",
+      "Customer Service Management"
+    ]
+  },
+  {
+    "id": "305144473334",
+    "name": "Cisco",
+    "stage": "3",
+    "lastModified": "2026-04-21T12:41:26.312Z",
+    "created": "2026-03-31T14:01:00.786Z",
+    "desc": "Cisco provides networking, cybersecurity, and IT infrastructure solutions including routers, switches, security appliances, and collaboration tools.",
+    "cat": "Networking & Infrastructure",
+    "solutions": [
+      "Network Switches & Routing",
+      "Cisco Firepower NGFW",
+      "Cisco Duo MFA",
+      "Cisco Webex (UCaaS)",
+      "Cisco SD-WAN",
+      "Cisco Meraki Wireless"
+    ]
+  },
+  {
+    "id": "305144473333",
+    "name": "Palo Alto Networks",
+    "stage": "3",
+    "lastModified": "2026-04-21T10:36:44.061Z",
+    "created": "2026-03-31T13:57:22.359Z",
+    "desc": "Palo Alto Networks provides advanced cybersecurity solutions including firewalls, endpoint protection, cloud security, and threat intelligence.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Next-Generation Firewall (NGFW)",
+      "Prisma SASE",
+      "Cortex XDR",
+      "Prisma Cloud (CNAPP)",
+      "Threat Intelligence",
+      "Prisma SD-WAN",
+      "Zero Trust Network Access (ZTNA)"
+    ]
+  },
+  {
+    "id": "303036624597",
+    "name": "Manage Engine",
+    "stage": "3",
+    "lastModified": "2026-04-03T07:29:20.568Z",
+    "created": "2026-03-16T11:40:15.009Z",
+    "desc": "ManageEngine provides a comprehensive suite of enterprise IT management, security, and operations tools, including ServiceDesk Plus, Endpoint Central, and OpManager.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "IT Service Management (ITSM)",
+      "Endpoint Management (UEM)",
+      "Network Monitoring",
+      "AD Management",
+      "SIEM (Log360)",
+      "Privileged Access Management (PAM)",
+      "Remote Monitoring & Management (RMM)"
+    ]
+  },
+  {
+    "id": "305381589696",
+    "name": "WP Engine",
+    "stage": "3",
+    "lastModified": "2026-03-31T18:00:54.568Z",
+    "created": "2026-03-31T17:43:26.365Z",
+    "desc": "WP Engine provides managed WordPress hosting and digital experience solutions, offering secure, scalable, and high-performance hosting for websites and web applications.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Managed WordPress Hosting",
+      "Web Application Hosting",
+      "Digital Experience Platform",
+      "Headless CMS Hosting"
+    ]
+  },
+  {
+    "id": "305057153725",
+    "name": "Absorb LMS",
+    "stage": "1",
+    "lastModified": "2026-03-31T16:07:02.824Z",
+    "created": "2026-03-30T17:16:54.211Z",
+    "desc": "Absorb LMS is a cloud-based learning management system enabling organizations to deliver, track, and manage training programs, employee development, and compliance learning.",
+    "cat": "Training & Certification",
+    "solutions": [
+      "Learning Management System (LMS)",
+      "Employee Training",
+      "Compliance Training",
+      "eLearning Delivery",
+      "Training Analytics"
+    ]
+  },
+  {
+    "id": "305379430097",
+    "name": "Kiteworks",
+    "stage": "2",
+    "lastModified": "2026-03-31T16:05:01.753Z",
+    "created": "2026-03-31T16:02:50.586Z",
+    "desc": "Kiteworks provides a secure content communications platform enabling organizations to share sensitive data through secure file transfer, managed file sharing, email protection, and governance.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Secure File Transfer (MFT)",
+      "Secure Email Gateway",
+      "Data Loss Prevention (DLP)",
+      "Content Firewall",
+      "Compliance & Governance"
+    ]
+  },
+  {
+    "id": "305057873635",
+    "name": "ClickUp",
+    "stage": "2",
+    "lastModified": "2026-03-31T15:58:13.831Z",
+    "created": "2026-03-30T17:19:28.211Z",
+    "desc": "ClickUp is a cloud-based project management and productivity platform enabling teams to plan, track, and collaborate on tasks, workflows, and projects.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "Project Management",
+      "Task Management",
+      "Workflow Automation",
+      "Team Collaboration",
+      "Docs & Wikis"
+    ]
+  },
+  {
+    "id": "305378709199",
+    "name": "Infosec IQ",
+    "stage": "3",
+    "lastModified": "2026-03-31T15:57:31.005Z",
+    "created": "2026-03-31T14:55:24.743Z",
+    "desc": "Infosec IQ provides cybersecurity awareness training and phishing simulation tools for organizations.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Security Awareness Training",
+      "Phishing Simulation",
+      "Compliance Training",
+      "Cybersecurity Education"
+    ]
+  },
+  {
+    "id": "305059312372",
+    "name": "DataDog",
+    "stage": "3",
+    "lastModified": "2026-03-31T15:56:39.543Z",
+    "created": "2026-03-30T18:43:31.769Z",
+    "desc": "Datadog provides cloud monitoring, observability, and security solutions for infrastructure, applications, logs, and performance management across cloud and hybrid environments.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Cloud Monitoring & Observability",
+      "Application Performance Monitoring (APM)",
+      "Log Management",
+      "Security Monitoring (SIEM/CSPM)",
+      "Infrastructure Metrics",
+      "Synthetic Monitoring"
+    ]
+  },
+  {
+    "id": "305379430087",
+    "name": "Redgate",
+    "stage": "2",
+    "lastModified": "2026-03-31T15:52:11.631Z",
+    "created": "2026-03-31T15:51:52.348Z",
+    "desc": "Redgate provides database DevOps and data management tools that help organizations automate development, deployment, and monitoring of databases.",
+    "cat": "Data & Analytics",
+    "solutions": [
+      "Database DevOps",
+      "Database Monitoring",
+      "SQL Change Automation",
+      "Data Masking",
+      "Database Management"
+    ]
+  },
+  {
+    "id": "305380149978",
+    "name": "Datto",
+    "stage": "2",
+    "lastModified": "2026-03-31T15:51:14.352Z",
+    "created": "2026-03-31T15:50:53.399Z",
+    "desc": "Datto provides backup, disaster recovery, and cybersecurity solutions designed for MSPs and IT service providers.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Backup & Disaster Recovery",
+      "Business Continuity",
+      "Ransomware Recovery",
+      "Cloud Backup",
+      "Microsoft 365 Backup",
+      "Email Security"
+    ]
+  },
+  {
+    "id": "305377269464",
+    "name": "EDMO",
+    "stage": "3",
+    "lastModified": "2026-03-31T15:48:02.152Z",
+    "created": "2026-03-31T15:24:15.665Z",
+    "desc": "EDMO provides workforce development, apprenticeship programs, and talent training services focused on building skills in technology and career readiness.",
+    "cat": "Training & Certification",
+    "solutions": [
+      "Workforce Development",
+      "Technology Apprenticeship Programs",
+      "Career Readiness Training",
+      "Talent Development"
+    ]
+  },
+  {
+    "id": "305379429110",
+    "name": "PeopleCert",
+    "stage": "3",
+    "lastModified": "2026-03-31T15:41:05.722Z",
+    "created": "2026-03-31T15:40:01.473Z",
+    "desc": "PeopleCert provides professional certification and credentialing services, including globally recognized frameworks such as ITIL, PRINCE2, and other IT certifications.",
+    "cat": "Training & Certification",
+    "solutions": [
+      "ITIL Certification",
+      "PRINCE2 Certification",
+      "DevOps Certifications",
+      "Digital Credentials",
+      "Professional Development"
+    ]
+  },
+  {
+    "id": "305377269476",
+    "name": "Accela",
+    "stage": "1",
+    "lastModified": "2026-03-31T15:39:23.212Z",
+    "created": "2026-03-31T15:37:23.735Z",
+    "desc": "Accela provides a civic engagement platform for government agencies, supporting permitting, licensing, inspections, and regulatory management.",
+    "cat": "Digital Government",
+    "solutions": [
+      "Permitting & Licensing Platform",
+      "Code Enforcement",
+      "Inspections Management",
+      "Regulatory Compliance",
+      "Civic Engagement Platform"
+    ]
+  },
+  {
+    "id": "305377989356",
+    "name": "Icertis",
+    "stage": "1",
+    "lastModified": "2026-03-31T15:36:42.400Z",
+    "created": "2026-03-31T15:36:11.831Z",
+    "desc": "Icertis provides a contract lifecycle management (CLM) platform enabling organizations to manage contracts, compliance, obligations, and risk across the enterprise.",
+    "cat": "ERP & Enterprise Apps",
+    "solutions": [
+      "Contract Lifecycle Management (CLM)",
+      "Contract AI & Analytics",
+      "Obligation Management",
+      "Compliance Management"
+    ]
+  },
+  {
+    "id": "305376549599",
+    "name": "Absolute Software",
+    "stage": "3",
+    "lastModified": "2026-03-31T15:35:06.983Z",
+    "created": "2026-03-31T15:31:59.052Z",
+    "desc": "Absolute provides endpoint security and visibility solutions with persistence technology, enabling organizations to secure, track, and manage devices across distributed environments.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Endpoint Security & Visibility",
+      "Zero Trust Endpoint Protection",
+      "Secure Access",
+      "Device Tracking",
+      "Firmware Persistence"
+    ]
+  },
+  {
+    "id": "305380869826",
+    "name": "TCP",
+    "stage": "2",
+    "lastModified": "2026-03-31T15:30:38.626Z",
+    "created": "2026-03-31T15:27:54.006Z",
+    "desc": "TCP provides workforce management solutions including time tracking, attendance, employee scheduling, and labor compliance tools.",
+    "cat": "HCM & HR",
+    "solutions": [
+      "Time & Attendance",
+      "Employee Scheduling",
+      "Labor Compliance",
+      "Workforce Management"
+    ]
+  },
+  {
+    "id": "305376549584",
+    "name": "Laserfiche",
+    "stage": "2",
+    "lastModified": "2026-03-31T15:23:22.684Z",
+    "created": "2026-03-31T15:21:11.645Z",
+    "desc": "Laserfiche is an enterprise content management (ECM) and business process automation platform enabling organizations to manage documents, automate workflows, ensure compliance, and drive digital transformation.",
+    "cat": "Document Management",
+    "solutions": [
+      "Enterprise Content Management (ECM)",
+      "Document Management System",
+      "Business Process Automation",
+      "Records Management",
+      "Compliance Workflows"
+    ]
+  },
+  {
+    "id": "305380868851",
+    "name": "Fiix",
+    "stage": "1",
+    "lastModified": "2026-03-31T15:14:26.052Z",
+    "created": "2026-03-31T15:13:22.980Z",
+    "desc": "Fiix provides a computerized maintenance management system (CMMS) for asset tracking, maintenance scheduling, and work order management.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "CMMS",
+      "Asset Tracking",
+      "Maintenance Scheduling",
+      "Work Order Management",
+      "Preventive Maintenance"
+    ]
+  },
+  {
+    "id": "305455895266",
+    "name": "Zoho",
+    "stage": "1",
+    "lastModified": "2026-03-31T15:09:46.470Z",
+    "created": "2026-03-31T15:08:40.073Z",
+    "desc": "Zoho provides a suite of business applications including CRM, finance, HR, and collaboration tools for organizations of all sizes.",
+    "cat": "CRM & Business Apps",
+    "solutions": [
+      "CRM",
+      "Marketing Automation",
+      "Finance & Accounting",
+      "HR Management",
+      "Project Management",
+      "Analytics"
+    ]
+  },
+  {
+    "id": "305380868847",
+    "name": "Varonis",
+    "stage": "1",
+    "lastModified": "2026-03-31T15:09:28.472Z",
+    "created": "2026-03-31T15:08:11.757Z",
+    "desc": "Varonis provides data security and analytics solutions focused on protecting sensitive data and detecting insider threats.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Data Security Platform",
+      "Data Loss Prevention (DLP)",
+      "Insider Threat Detection",
+      "Data Classification",
+      "Access Governance"
+    ]
+  },
+  {
+    "id": "305379429083",
+    "name": "Netwrix",
+    "stage": "2",
+    "lastModified": "2026-03-31T15:08:30.872Z",
+    "created": "2026-03-31T15:06:22.412Z",
+    "desc": "Netwrix provides data security, identity governance, and compliance solutions to protect sensitive data.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Data Security",
+      "Identity Governance",
+      "Compliance Auditing",
+      "Privileged Access Management (PAM)",
+      "Change Auditing"
+    ]
+  },
+  {
+    "id": "305377989329",
+    "name": "ConnectSecure",
+    "stage": "3",
+    "lastModified": "2026-03-31T15:06:02.177Z",
+    "created": "2026-03-31T15:05:08.712Z",
+    "desc": "ConnectSecure provides vulnerability scanning and risk management solutions for MSPs and enterprise IT environments.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Vulnerability Scanning",
+      "Risk Assessment",
+      "Compliance Reporting",
+      "Attack Surface Management"
+    ]
+  },
+  {
+    "id": "305206772419",
+    "name": "Dropsuite",
+    "stage": "1",
+    "lastModified": "2026-03-31T14:49:52.752Z",
+    "created": "2026-03-31T14:49:30.533Z",
+    "desc": "Dropsuite provides cloud backup and archiving solutions for email, Microsoft 365, and Google Workspace environments.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Email Backup",
+      "Microsoft 365 Backup",
+      "Google Workspace Backup",
+      "Cloud Archiving",
+      "Data Recovery"
+    ]
+  },
+  {
+    "id": "305205332669",
+    "name": "PagerDuty",
+    "stage": "1",
+    "lastModified": "2026-03-31T14:49:43.708Z",
+    "created": "2026-03-31T14:48:48.343Z",
+    "desc": "PagerDuty provides incident response and IT operations management solutions to help organizations manage outages and critical events.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "Incident Management",
+      "AIOps",
+      "Event Intelligence",
+      "On-Call Management",
+      "DevOps Automation"
+    ]
+  },
+  {
+    "id": "305110128367",
+    "name": "Proofpoint",
+    "stage": "1",
+    "lastModified": "2026-03-31T14:49:12.809Z",
+    "created": "2026-03-31T14:48:13.278Z",
+    "desc": "Proofpoint provides email security, threat protection, and compliance solutions to safeguard organizations from cyber threats.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Email Security",
+      "Anti-Phishing",
+      "Threat Protection",
+      "Data Loss Prevention (DLP)",
+      "Archiving & Compliance",
+      "Security Awareness Training"
+    ]
+  },
+  {
+    "id": "305206772413",
+    "name": "KnowBe4",
+    "stage": "2",
+    "lastModified": "2026-03-31T14:45:43.631Z",
+    "created": "2026-03-31T14:44:14.743Z",
+    "desc": "KnowBe4 provides security awareness training and phishing simulation platforms to help organizations reduce human cybersecurity risk.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Security Awareness Training",
+      "Phishing Simulation",
+      "Compliance Training",
+      "Risk Scoring",
+      "Security Culture Assessment"
+    ]
+  },
+  {
+    "id": "305241362115",
+    "name": "Tenable",
+    "stage": "3",
+    "lastModified": "2026-03-31T14:36:38.420Z",
+    "created": "2026-03-31T14:35:48.803Z",
+    "desc": "Tenable provides vulnerability management and cybersecurity solutions to identify, assess, and prioritize risks across IT environments.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Vulnerability Management",
+      "Nessus Scanner",
+      "Cloud Security Posture (CSPM)",
+      "OT Security",
+      "Cyber Exposure Platform"
+    ]
+  },
+  {
+    "id": "305375109849",
+    "name": "NinjaOne",
+    "stage": "1",
+    "lastModified": "2026-03-31T14:35:21.637Z",
+    "created": "2026-03-31T14:35:08.157Z",
+    "desc": "NinjaOne provides remote monitoring and management (RMM), patch management, and endpoint management solutions for IT operations and MSPs.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "Remote Monitoring & Management (RMM)",
+      "Patch Management",
+      "Endpoint Management",
+      "IT Automation",
+      "Remote Access"
+    ]
+  },
+  {
+    "id": "305110128362",
+    "name": "SentinelOne",
+    "stage": "1",
+    "lastModified": "2026-03-31T14:34:59.761Z",
+    "created": "2026-03-31T14:34:37.745Z",
+    "desc": "SentinelOne provides AI-powered endpoint protection, detection, and response (EDR/XDR) solutions for enterprise cybersecurity.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Endpoint Detection & Response (EDR)",
+      "XDR Platform",
+      "AI-Powered Threat Detection",
+      "Ransomware Protection",
+      "Cloud Workload Protection",
+      "Managed Detection & Response (MDR)"
+    ]
+  },
+  {
+    "id": "305375828724",
+    "name": "Claroty",
+    "stage": "1",
+    "lastModified": "2026-03-31T14:34:23.457Z",
+    "created": "2026-03-31T14:34:06.611Z",
+    "desc": "Claroty provides cybersecurity solutions for operational technology (OT), IoT, and cyber-physical systems, focusing on industrial and critical infrastructure protection.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "OT Security",
+      "IoT Security",
+      "ICS/SCADA Security",
+      "Cyber-Physical Systems Protection",
+      "Asset Discovery",
+      "Industrial Cybersecurity"
+    ]
+  },
+  {
+    "id": "305375109846",
+    "name": "Arctic Wolf",
+    "stage": "1",
+    "lastModified": "2026-03-31T14:34:05.878Z",
+    "created": "2026-03-31T14:33:39.261Z",
+    "desc": "Arctic Wolf provides managed detection and response (MDR) and security operations solutions for continuous threat monitoring and response.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Managed Detection & Response (MDR)",
+      "Security Operations Center (SOC)",
+      "Incident Response",
+      "Cloud Detection & Response",
+      "Vulnerability Assessment"
+    ]
+  },
+  {
+    "id": "305375828718",
+    "name": "Darktrace",
+    "stage": "4",
+    "lastModified": "2026-03-31T14:32:38.035Z",
+    "created": "2026-03-31T14:26:22.012Z",
+    "desc": "Darktrace provides AI-driven cybersecurity solutions focused on threat detection, response, and autonomous security.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "AI Threat Detection",
+      "Autonomous Response",
+      "Email Security",
+      "Cloud Security",
+      "OT Security",
+      "Threat Intelligence"
+    ]
+  },
+  {
+    "id": "305206050535",
+    "name": "Qualys",
+    "stage": "1",
+    "lastModified": "2026-03-31T14:25:21.437Z",
+    "created": "2026-03-31T14:25:08.157Z",
+    "desc": "Qualys provides cloud-based security and compliance solutions including vulnerability management, asset discovery, and risk assessment.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Vulnerability Management",
+      "Asset Discovery",
+      "Cloud Security Posture (CSPM)",
+      "Web Application Scanning",
+      "Policy Compliance"
+    ]
+  },
+  {
+    "id": "305375828714",
+    "name": "CrowdStrike",
+    "stage": "2",
+    "lastModified": "2026-03-31T14:24:18.966Z",
+    "created": "2026-03-31T14:22:15.994Z",
+    "desc": "CrowdStrike provides endpoint protection, threat intelligence, and managed detection and response (MDR) solutions.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Endpoint Detection & Response (EDR)",
+      "XDR Platform",
+      "Threat Intelligence",
+      "Managed Detection & Response (MDR)",
+      "Identity Protection",
+      "Cloud Security",
+      "Zero Trust"
+    ]
+  },
+  {
+    "id": "305143753409",
+    "name": "Ping Identity",
+    "stage": "3",
+    "lastModified": "2026-03-31T14:21:34.533Z",
+    "created": "2026-03-31T14:19:25.673Z",
+    "desc": "Ping Identity provides identity and access management (IAM) solutions including single sign-on (SSO), multi-factor authentication (MFA), and identity governance.",
+    "cat": "Cybersecurity",
+    "solutions": [
+      "Single Sign-On (SSO)",
+      "Multi-Factor Authentication (MFA)",
+      "Identity Governance & Administration (IGA)",
+      "Zero Trust Security",
+      "API Security",
+      "Privileged Access Management (PAM)"
+    ]
+  },
+  {
+    "id": "305241361144",
+    "name": "IBM",
+    "stage": "3",
+    "lastModified": "2026-03-31T14:11:24.662Z",
+    "created": "2026-03-31T14:09:08.692Z",
+    "desc": "IBM provides enterprise technology solutions including cloud computing, AI, data platforms, cybersecurity, and enterprise software.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "IBM Cloud (IaaS)",
+      "IBM Security QRadar (SIEM)",
+      "IBM watsonx AI",
+      "IBM Maximo (EAM)",
+      "IBM FlashSystem Storage",
+      "IBM DataStage (ETL)",
+      "IBM OpenPages (GRC)"
+    ]
+  },
+  {
+    "id": "305144473331",
+    "name": "CommVault",
+    "stage": "2",
+    "lastModified": "2026-03-31T13:54:13.031Z",
+    "created": "2026-03-31T13:53:07.643Z",
+    "desc": "Commvault provides data protection, backup, recovery, and data management solutions for enterprise and cloud environments.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Backup & Disaster Recovery",
+      "Cloud Data Protection",
+      "Ransomware Recovery",
+      "Microsoft 365 Backup",
+      "Data Governance"
+    ]
+  },
+  {
+    "id": "305206771415",
+    "name": "Solarwinds",
+    "stage": "3",
+    "lastModified": "2026-03-31T13:51:04.982Z",
+    "created": "2026-03-31T13:50:09.373Z",
+    "desc": "SolarWinds provides IT monitoring, network management, and security solutions for infrastructure and operations teams.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "Network Performance Monitoring",
+      "Server & Application Monitor",
+      "Security Event Manager (SIEM)",
+      "IT Help Desk",
+      "Database Performance Analyzer"
+    ]
+  },
+  {
+    "id": "305206050514",
+    "name": "Splunk",
+    "stage": "2",
+    "lastModified": "2026-03-31T13:49:31.982Z",
+    "created": "2026-03-31T13:49:06.695Z",
+    "desc": "Splunk provides data analytics, SIEM, and observability solutions enabling organizations to monitor, search, and analyze machine data in real time.",
+    "cat": "Data & Analytics",
+    "solutions": [
+      "SIEM & Log Management",
+      "Observability",
+      "IT Operations Analytics",
+      "Threat Intelligence",
+      "Splunk SOAR",
+      "Business Analytics"
+    ]
+  },
+  {
+    "id": "305375108844",
+    "name": "ArrowSphere",
+    "stage": "3",
+    "lastModified": "2026-03-31T13:37:20.438Z",
+    "created": "2026-03-31T13:36:37.361Z",
+    "desc": "ArrowSphere is a cloud marketplace platform by Arrow Electronics enabling partners to procure, manage, and bill cloud services and SaaS solutions across multiple vendors.",
+    "cat": "Distributors",
+    "solutions": [
+      "Cloud Marketplace",
+      "Multi-Vendor Procurement",
+      "Cloud Billing & Management",
+      "SaaS Distribution"
+    ]
+  },
+  {
+    "id": "305205331657",
+    "name": "Ingram Micro",
+    "stage": "1",
+    "lastModified": "2026-03-31T13:34:47.738Z",
+    "created": "2026-03-31T13:34:34.933Z",
+    "desc": "Ingram Micro is a global distributor of technology products and services, providing access to hardware, software, cloud, and lifecycle solutions.",
+    "cat": "Distributors",
+    "solutions": [
+      "Hardware Distribution",
+      "Software Licensing",
+      "Cloud Marketplace",
+      "Lifecycle Services",
+      "IT Procurement"
+    ]
+  },
+  {
+    "id": "305241361124",
+    "name": "SHI International",
+    "stage": "3",
+    "lastModified": "2026-03-31T13:32:29.538Z",
+    "created": "2026-03-31T13:31:22.831Z",
+    "desc": "SHI International is a global IT solutions provider offering procurement, licensing, and cloud solutions across a wide range of enterprise technologies.",
+    "cat": "Distributors",
+    "solutions": [
+      "IT Procurement",
+      "Software Licensing",
+      "Cloud Solutions",
+      "Hardware Resale",
+      "Managed Services"
+    ]
+  },
+  {
+    "id": "305206770422",
+    "name": "TD SYNNEX",
+    "stage": "3",
+    "lastModified": "2026-03-31T13:07:42.042Z",
+    "created": "2026-03-31T13:03:40.243Z",
+    "desc": "TD SYNNEX is a global IT distributor providing access to hardware, software, and cloud solutions from major OEMs including IBM, Cisco, Microsoft, and others.",
+    "cat": "Distributors",
+    "solutions": [
+      "IT Distribution",
+      "Cloud Marketplace",
+      "Hardware Resale",
+      "Software Licensing",
+      "Solution Aggregation"
+    ]
+  },
+  {
+    "id": "305241361086",
+    "name": "Pax8",
+    "stage": "3",
+    "lastModified": "2026-03-31T12:58:19.538Z",
+    "created": "2026-03-31T12:35:12.831Z",
+    "desc": "Pax8 is a cloud marketplace distributor enabling partners to procure, manage, and bill cloud solutions including Microsoft, security, and SaaS products.",
+    "cat": "Distributors",
+    "solutions": [
+      "Cloud Marketplace",
+      "Microsoft CSP",
+      "Security Product Distribution",
+      "SaaS Procurement",
+      "Billing & Management"
+    ]
+  },
+  {
+    "id": "305206049514",
+    "name": "UKG",
+    "stage": "4",
+    "lastModified": "2026-03-31T11:44:09.043Z",
+    "created": "2026-03-31T11:43:34.323Z",
+    "desc": "UKG provides workforce management and human capital management solutions including payroll, scheduling, time tracking, and HR services.",
+    "cat": "HCM & HR",
+    "solutions": [
+      "Human Capital Management (HCM)",
+      "Payroll Management",
+      "Workforce Scheduling",
+      "Time & Attendance",
+      "HR Service Delivery"
+    ]
+  },
+  {
+    "id": "305206049513",
+    "name": "Workday",
+    "stage": "4",
+    "lastModified": "2026-03-31T11:41:12.795Z",
+    "created": "2026-03-31T11:40:37.201Z",
+    "desc": "Workday provides enterprise cloud applications for finance, human resources, planning, and analytics.",
+    "cat": "ERP & Enterprise Apps",
+    "solutions": [
+      "Human Capital Management (HCM)",
+      "Financial Management",
+      "Adaptive Planning",
+      "Analytics & Reporting",
+      "Payroll Management"
+    ]
+  },
+  {
+    "id": "305144472305",
+    "name": "ADP",
+    "stage": "2",
+    "lastModified": "2026-03-31T11:39:43.043Z",
+    "created": "2026-03-31T11:39:09.831Z",
+    "desc": "ADP provides human capital management (HCM) solutions including payroll, HR, talent management, and workforce administration services.",
+    "cat": "HCM & HR",
+    "solutions": [
+      "Payroll Processing",
+      "HR Management",
+      "Talent Management",
+      "Benefits Administration",
+      "Time & Attendance",
+      "Workforce Analytics"
+    ]
+  },
+  {
+    "id": "305206770390",
+    "name": "Ellucian",
+    "stage": "4",
+    "lastModified": "2026-03-31T11:38:46.470Z",
+    "created": "2026-03-31T11:38:18.831Z",
+    "desc": "Ellucian provides software and services specifically designed for higher education institutions, including student information systems (SIS), ERP, analytics, and cloud solutions.",
+    "cat": "Education Technology",
+    "solutions": [
+      "Student Information System (SIS)",
+      "Banner ERP",
+      "Colleague ERP",
+      "Advising & Analytics",
+      "Higher Education Cloud"
+    ]
+  },
+  {
+    "id": "305207490243",
+    "name": "SAP",
+    "stage": "3",
+    "lastModified": "2026-03-31T11:31:25.131Z",
+    "created": "2026-03-31T11:21:19.349Z",
+    "desc": "SAP provides enterprise resource planning (ERP) solutions and business applications for finance, supply chain, HR, and analytics.",
+    "cat": "ERP & Enterprise Apps",
+    "solutions": [
+      "SAP S/4HANA ERP",
+      "SAP SuccessFactors HCM",
+      "SAP Ariba Procurement",
+      "SAP Analytics Cloud",
+      "SAP BTP Platform",
+      "Payroll Management"
+    ]
+  },
+  {
+    "id": "305142303430",
+    "name": "Oracle",
+    "stage": "3",
+    "lastModified": "2026-03-30T19:30:30.856Z",
+    "created": "2026-03-30T19:23:27.831Z",
+    "desc": "Oracle provides enterprise software and cloud solutions including ERP, database management systems, cloud infrastructure (OCI), and enterprise applications.",
+    "cat": "ERP & Enterprise Apps",
+    "solutions": [
+      "Oracle Cloud ERP",
+      "Oracle HCM Cloud",
+      "Oracle Database",
+      "Oracle Cloud Infrastructure (OCI)",
+      "Oracle Analytics",
+      "PeopleSoft",
+      "Payroll Management"
+    ]
+  },
+  {
+    "id": "304982893299",
+    "name": "Dynatrace",
+    "stage": "1",
+    "lastModified": "2026-03-30T19:20:58.474Z",
+    "created": "2026-03-30T19:20:26.353Z",
+    "desc": "Dynatrace provides application performance monitoring (APM), observability, and AI-driven monitoring solutions for cloud-native and enterprise applications.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Application Performance Monitoring (APM)",
+      "Full-Stack Observability",
+      "AIOps",
+      "Log Management",
+      "Cloud Infrastructure Monitoring"
+    ]
+  },
+  {
+    "id": "304982893297",
+    "name": "Extreme Networks",
+    "stage": "3",
+    "lastModified": "2026-03-30T19:12:58.505Z",
+    "created": "2026-03-30T19:10:20.353Z",
+    "desc": "Extreme Networks provides networking solutions including wired and wireless infrastructure, cloud networking, and network analytics for enterprise and public sector environments.",
+    "cat": "Networking & Infrastructure",
+    "solutions": [
+      "Network Switches & Routing",
+      "Wireless LAN",
+      "Cloud Networking",
+      "Network Analytics",
+      "Campus Fabric"
+    ]
+  },
+  {
+    "id": "305141582576",
+    "name": "Amazee.io",
+    "stage": "3",
+    "lastModified": "2026-03-30T19:13:00.879Z",
+    "created": "2026-03-30T19:08:52.353Z",
+    "desc": "amazee.io provides managed hosting and cloud infrastructure services specifically designed for Drupal and open-source web applications.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Managed Drupal Hosting",
+      "Open Source Web Hosting",
+      "Cloud Infrastructure",
+      "DevOps for Web Apps"
+    ]
+  },
+  {
+    "id": "305108679358",
+    "name": "Sharegate",
+    "stage": "3",
+    "lastModified": "2026-03-30T18:57:08.538Z",
+    "created": "2026-03-30T18:56:50.070Z",
+    "desc": "ShareGate provides migration and management tools for Microsoft environments, enabling organizations to migrate, manage, and secure SharePoint, Microsoft Teams, and Microsoft 365 environments.",
+    "cat": "Document Management",
+    "solutions": [
+      "SharePoint Migration",
+      "Microsoft 365 Migration",
+      "Teams Migration",
+      "M365 Governance",
+      "Content Management"
+    ]
+  },
+  {
+    "id": "305059312361",
+    "name": "Informatica",
+    "stage": "1",
+    "lastModified": "2026-03-30T18:40:44.080Z",
+    "created": "2026-03-30T18:38:48.779Z",
+    "desc": "Informatica provides enterprise data integration, data governance, and cloud data management solutions.",
+    "cat": "Data & Analytics",
+    "solutions": [
+      "Cloud Data Integration",
+      "Master Data Management (MDM)",
+      "Data Governance",
+      "Data Quality",
+      "iPaaS / API Integration",
+      "ETL"
+    ]
+  },
+  {
+    "id": "305107958496",
+    "name": "DataBricks",
+    "stage": "3",
+    "lastModified": "2026-03-30T18:36:09.911Z",
+    "created": "2026-03-30T18:35:07.831Z",
+    "desc": "Databricks provides a unified data and AI platform built on Apache Spark, enabling data engineering, data science, machine learning, and analytics.",
+    "cat": "Data & Analytics",
+    "solutions": [
+      "Data Lakehouse Platform",
+      "Machine Learning (ML)",
+      "Data Engineering",
+      "SQL Analytics",
+      "AI/ML Workflows",
+      "Delta Lake"
+    ]
+  },
+  {
+    "id": "305107958491",
+    "name": "Microsoft Azure",
+    "stage": "3",
+    "lastModified": "2026-03-30T18:33:55.001Z",
+    "created": "2026-03-30T18:28:07.009Z",
+    "desc": "Microsoft Azure is a cloud computing platform offering services for compute, storage, networking, analytics, AI, and enterprise application hosting.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Azure Cloud Infrastructure (IaaS)",
+      "Azure AI & OpenAI Services",
+      "Azure Kubernetes Service (AKS)",
+      "Microsoft Sentinel (SIEM)",
+      "Azure DevOps",
+      "Microsoft Entra ID (IAM)",
+      "Microsoft 365",
+      "Power BI",
+      "Power Platform"
+    ]
+  },
+  {
+    "id": "305109398263",
+    "name": "Red Hat",
+    "stage": "2",
+    "lastModified": "2026-03-30T18:26:58.911Z",
+    "created": "2026-03-30T18:26:21.353Z",
+    "desc": "Red Hat provides enterprise open-source solutions including Linux (RHEL), OpenShift (Kubernetes platform), automation, and middleware.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Red Hat Enterprise Linux (RHEL)",
+      "OpenShift (Kubernetes)",
+      "Ansible Automation Platform",
+      "OpenStack",
+      "Middleware & Integration",
+      "DevSecOps"
+    ]
+  },
+  {
+    "id": "305109398256",
+    "name": "Amazon Web Services (AWS)",
+    "stage": "3",
+    "lastModified": "2026-03-30T18:21:37.577Z",
+    "created": "2026-03-30T18:20:57.831Z",
+    "desc": "Amazon Web Services (AWS) is a leading cloud computing platform providing scalable infrastructure, storage, databases, analytics, and AI/ML services.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "AWS Cloud Infrastructure (IaaS)",
+      "AWS GovCloud",
+      "Amazon S3 Storage",
+      "Amazon RDS & Databases",
+      "AWS SageMaker (AI/ML)",
+      "AWS Security Hub",
+      "ETL & Data Integration",
+      "Backup & Disaster Recovery"
+    ]
+  },
+  {
+    "id": "305109398247",
+    "name": "Atlassian",
+    "stage": "4",
+    "lastModified": "2026-03-30T18:13:49.433Z",
+    "created": "2026-03-30T18:13:05.830Z",
+    "desc": "Atlassian provides collaboration and productivity tools such as Jira, Confluence, and Trello, widely used for project management, software development, and team collaboration.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "Jira (Project & Issue Tracking)",
+      "Confluence (Knowledge Management)",
+      "Jira Service Management (ITSM)",
+      "Trello",
+      "Bitbucket (DevOps)"
+    ]
+  },
+  {
+    "id": "305107238588",
+    "name": "Trimble",
+    "stage": "2",
+    "lastModified": "2026-03-30T18:12:19.538Z",
+    "created": "2026-03-30T18:11:50.070Z",
+    "desc": "Trimble provides technology solutions across construction, geospatial, transportation, and utilities sectors.",
+    "cat": "GIS & Engineering",
+    "solutions": [
+      "Geospatial Solutions",
+      "Construction Technology",
+      "Transportation Management",
+      "Utility & GIS Software",
+      "Civil Engineering Software"
+    ]
+  },
+  {
+    "id": "305109398245",
+    "name": "Alemba",
+    "stage": "4",
+    "lastModified": "2026-03-30T18:11:27.433Z",
+    "created": "2026-03-30T18:11:09.009Z",
+    "desc": "Alemba provides IT service management (ITSM) solutions designed to support IT operations, service delivery, and enterprise service management.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "ITSM Platform",
+      "IT Service Delivery",
+      "Asset Management",
+      "Configuration Management"
+    ]
+  },
+  {
+    "id": "305107958476",
+    "name": "SolarWinds",
+    "stage": "3",
+    "lastModified": "2026-03-30T18:09:54.306Z",
+    "created": "2026-03-30T18:08:55.830Z",
+    "desc": "SolarWinds provides IT management and monitoring solutions for network performance, system monitoring, security, and IT operations.",
+    "cat": "Networking & Infrastructure",
+    "solutions": [
+      "Network Performance Monitoring",
+      "Server & Application Monitor",
+      "Security Event Manager",
+      "IT Operations Management",
+      "Database Performance Analyzer"
+    ]
+  },
+  {
+    "id": "305107957494",
+    "name": "CDW",
+    "stage": "3",
+    "lastModified": "2026-03-30T18:08:37.524Z",
+    "created": "2026-03-30T17:47:37.830Z",
+    "desc": "CDW is a marketplace for hardware and software procurement, serving enterprise and government clients.",
+    "cat": "Distributors",
+    "solutions": [
+      "Hardware Marketplace",
+      "Software Licensing",
+      "IT Procurement",
+      "Cloud Solutions",
+      "Government Procurement"
+    ]
+  },
+  {
+    "id": "305059311305",
+    "name": "OpenText",
+    "stage": "4",
+    "lastModified": "2026-03-30T17:24:40.130Z",
+    "created": "2026-03-30T17:22:48.009Z",
+    "desc": "OpenText is an enterprise information management platform providing solutions for document management, content services, business process automation, cybersecurity, and analytics.",
+    "cat": "Document Management",
+    "solutions": [
+      "Enterprise Content Management (ECM)",
+      "Document Management System",
+      "Email Archive",
+      "Business Process Automation",
+      "Cybersecurity Analytics"
+    ]
+  },
+  {
+    "id": "304980734658",
+    "name": "IBM Maximo",
+    "stage": "3",
+    "lastModified": "2026-03-30T17:16:41.633Z",
+    "created": "2026-03-30T17:15:25.830Z",
+    "desc": "IBM Maximo is an enterprise asset management (EAM) solution enabling organizations to manage physical assets, maintenance operations, work orders, and inventory.",
+    "cat": "ITSM & Asset Management",
+    "solutions": [
+      "Enterprise Asset Management (EAM)",
+      "CMMS",
+      "Preventive Maintenance",
+      "Work Order Management",
+      "IoT Asset Monitoring",
+      "Facilities Management"
+    ]
+  },
+  {
+    "id": "305055712985",
+    "name": "Clio",
+    "stage": "3",
+    "lastModified": "2026-03-30T17:12:05.633Z",
+    "created": "2026-03-30T17:11:36.830Z",
+    "desc": "Clio is a cloud-based legal practice management platform providing tools for case management, client intake, billing, document management, and legal workflow automation.",
+    "cat": "Document Management",
+    "solutions": [
+      "Legal Case Management",
+      "Client Intake",
+      "Legal Billing",
+      "Document Management",
+      "Legal Practice Management"
+    ]
+  },
+  {
+    "id": "305057152701",
+    "name": "Hubspot",
+    "stage": "3",
+    "lastModified": "2026-03-30T16:50:44.708Z",
+    "created": "2026-03-30T16:11:41.282Z",
+    "desc": "HubSpot is a cloud-based CRM and marketing automation platform offering tools for marketing, sales, customer service, and content management.",
+    "cat": "CRM & Business Apps",
+    "solutions": [
+      "CRM",
+      "Marketing Automation",
+      "Sales Hub",
+      "Service Hub",
+      "Content Management",
+      "Operations Hub"
+    ]
+  },
+  {
+    "id": "304981453504",
+    "name": "Microsoft Dynamics 365",
+    "stage": "3",
+    "lastModified": "2026-03-30T16:50:34.208Z",
+    "created": "2026-03-30T16:23:27.830Z",
+    "desc": "Microsoft Dynamics 365 is a suite of enterprise applications combining CRM and ERP capabilities, enabling organizations to manage finance, operations, sales, and customer engagement.",
+    "cat": "ERP & Enterprise Apps",
+    "solutions": [
+      "CRM (Customer Engagement)",
+      "ERP (Finance & Operations)",
+      "Business Central",
+      "Field Service",
+      "Supply Chain Management",
+      "Marketing Automation",
+      "Human Resources"
+    ]
+  },
+  {
+    "id": "304980732635",
+    "name": "Salesforce",
+    "stage": "3",
+    "lastModified": "2026-03-30T16:02:12.067Z",
+    "created": "2026-03-30T15:47:13.282Z",
+    "desc": "Salesforce is a CRM platform that centralizes customer data, automating sales, marketing, customer service, and e-commerce for businesses.",
+    "cat": "CRM & Business Apps",
+    "solutions": [
+      "CRM",
+      "Salesforce Government Cloud",
+      "Sales Cloud",
+      "Service Cloud",
+      "Marketing Cloud",
+      "Experience Cloud",
+      "Einstein AI",
+      "Tableau Analytics"
+    ]
+  },
+  {
+    "id": "304980732622",
+    "name": "ArcGIS",
+    "stage": "1",
+    "lastModified": "2026-03-30T15:35:14.579Z",
+    "created": "2026-03-30T15:35:01.477Z",
+    "desc": "ArcGIS Online is a cloud-based mapping and analysis solution for making maps, analyzing data, and sharing geospatial information.",
+    "cat": "GIS & Engineering",
+    "solutions": [
+      "GIS & Spatial Analytics",
+      "Mapping & Visualization",
+      "Location Intelligence",
+      "Urban Planning",
+      "Utility Network Management",
+      "Field Operations"
+    ]
+  },
+  {
+    "id": "304728116925",
+    "name": "Versity Software",
+    "stage": "1",
+    "lastModified": "2026-03-27T19:26:47.565Z",
+    "created": "2026-03-27T19:26:35.477Z",
+    "desc": "Versity Software provides high-performance, software-defined mass storage and archiving solutions designed for exabyte-scale data for AI, scientific computing, and enterprise needs.",
+    "cat": "Cloud & Infrastructure",
+    "solutions": [
+      "Mass Storage",
+      "Archiving Solutions",
+      "Exabyte-Scale Data Management",
+      "Software-Defined Storage",
+      "AI Data Infrastructure"
+    ]
+  }
+];
+
+</script>
+<script>
+// ══════════════════════════════════════════════
+// DATA FROM HUBSPOT (live as of last fetch)
+// ══════════════════════════════════════════════
+// HS_PARTNERS loaded from caps_partners_data.js
+// See caps_partners_data.js for all partner records
+// This keeps index.html lightweight — only data.js changes on refresh
+
+
+// ══════════════════════════════════════════════════════════
+// SOLUTION TAXONOMY — Semantic grouping of all solutions
+// Maps capability → all partners that offer it
+// Each partner entry references the real HubSpot record ID
+// ══════════════════════════════════════════════════════════
+const SOLUTION_TAXONOMY = [
+
+  // ── ENDPOINT & DEVICE SECURITY ────────────────────────────────────────
+  {
+    solution: "Endpoint Detection & Response (EDR / XDR)",
+    category: "Cybersecurity",
+    keywords: ["edr","xdr","endpoint detection","endpoint response","endpoint protection","falcon","singularity","cortex xdr","defender for endpoint"],
+    partners: [
+      {id:"305375828714", name:"CrowdStrike",       product:"CrowdStrike Falcon EDR/XDR",            stage:"2"},
+      {id:"305110128362", name:"SentinelOne",       product:"SentinelOne Singularity XDR",           stage:"1"},
+      {id:"305144473333", name:"Palo Alto Networks",product:"Cortex XDR",                            stage:"3"},
+      {id:"305206771449", name:"Fortinet",          product:"FortiEDR",                              stage:"3"},
+      {id:"305379429086", name:"Watchguard Technologies", product:"WatchGuard EPDR",                stage:"3"},
+    ]
+  },
+  {
+    solution: "Antivirus & Malware Protection",
+    category: "Cybersecurity",
+    keywords: ["antivirus","malware","malware protection","endpoint protection","anti-virus","av"],
+    partners: [
+      {id:"305375828714", name:"CrowdStrike",             product:"CrowdStrike Falcon Prevent",      stage:"2"},
+      {id:"305110128362", name:"SentinelOne",             product:"SentinelOne Core AV",             stage:"1"},
+      {id:"305379429086", name:"Watchguard Technologies", product:"WatchGuard Endpoint Security",   stage:"3"},
+      {id:"305376549599", name:"Absolute Software",       product:"Absolute Secure Endpoint",       stage:"3"},
+    ]
+  },
+  {
+    solution: "Managed Detection & Response (MDR / SOC-as-a-Service)",
+    category: "Cybersecurity",
+    keywords: ["mdr","managed detection","managed response","soc as a service","managed security","threat monitoring"],
+    partners: [
+      {id:"305375109846", name:"Arctic Wolf",     product:"Arctic Wolf MDR",                         stage:"1"},
+      {id:"305375828714", name:"CrowdStrike",     product:"CrowdStrike Falcon Complete MDR",         stage:"2"},
+      {id:"305110128362", name:"SentinelOne",     product:"SentinelOne Vigilance MDR",              stage:"1"},
+    ]
+  },
+  {
+    solution: "Endpoint Visibility & Device Management",
+    category: "Cybersecurity",
+    keywords: ["endpoint visibility","device management","endpoint management","device tracking","persistence","absolute"],
+    partners: [
+      {id:"305376549599", name:"Absolute Software",  product:"Absolute Resilience (Device Visibility)",  stage:"3"},
+      {id:"305375109849", name:"NinjaOne",           product:"NinjaOne Endpoint Management",             stage:"1"},
+      {id:"303036624597", name:"Manage Engine",      product:"ManageEngine Endpoint Central (UEM)",      stage:"3"},
+    ]
+  },
+
+  // ── NETWORK & PERIMETER SECURITY ─────────────────────────────────────
+  {
+    solution: "Next-Generation Firewall (NGFW)",
+    category: "Cybersecurity",
+    keywords: ["firewall","ngfw","next generation firewall","network firewall","fortigate","pa-series"],
+    partners: [
+      {id:"305144473333", name:"Palo Alto Networks",      product:"Palo Alto NGFW (PA-Series)",     stage:"3"},
+      {id:"305206771449", name:"Fortinet",                product:"FortiGate NGFW",                 stage:"3"},
+      {id:"305144473334", name:"Cisco",                   product:"Cisco Firepower NGFW",           stage:"3"},
+      {id:"305379429086", name:"Watchguard Technologies", product:"WatchGuard Firebox",             stage:"3"},
+    ]
+  },
+  {
+    solution: "Secure SD-WAN",
+    category: "Cybersecurity",
+    keywords: ["sd-wan","sdwan","secure wide area","wan security","software defined wan"],
+    partners: [
+      {id:"305144473333", name:"Palo Alto Networks", product:"Prisma SD-WAN",                stage:"3"},
+      {id:"305206771449", name:"Fortinet",           product:"FortiGate Secure SD-WAN",      stage:"3"},
+      {id:"305144473334", name:"Cisco",              product:"Cisco SD-WAN (Viptela/Meraki)",stage:"3"},
+    ]
+  },
+  {
+    solution: "Zero Trust Network Access (ZTNA / SASE)",
+    category: "Cybersecurity",
+    keywords: ["zero trust","ztna","sase","zero trust network","secure access","network access control","prisma access","prisma sase"],
+    partners: [
+      {id:"305144473333", name:"Palo Alto Networks",      product:"Palo Alto Prisma SASE / ZTNA",   stage:"3"},
+      {id:"305206771449", name:"Fortinet",                product:"FortiSASE Zero Trust",            stage:"3"},
+      {id:"305379429086", name:"Watchguard Technologies", product:"WatchGuard ZTNA",                stage:"3"},
+      {id:"305376549599", name:"Absolute Software",       product:"Absolute Secure Access",         stage:"3"},
+      {id:"305379430097", name:"Kiteworks",               product:"Kiteworks Private Data Network", stage:"2"},
+    ]
+  },
+  {
+    solution: "OT / ICS / SCADA Security (Operational Technology)",
+    category: "Cybersecurity",
+    keywords: ["ot security","ics","scada","industrial control","operational technology","cyber physical","ot/iot","iot security","industrial security"],
+    partners: [
+      {id:"305375828724", name:"Claroty",    product:"Claroty Platform (xDome) — OT/ICS/IoT", stage:"1"},
+      {id:"305375828718", name:"Darktrace",  product:"Darktrace OT/ICS",                       stage:"4"},
+      {id:"305375828714", name:"CrowdStrike",product:"CrowdStrike Falcon for OT",              stage:"2"},
+    ]
+  },
+  {
+    solution: "Email Security & Anti-Phishing",
+    category: "Cybersecurity",
+    keywords: ["email security","anti phishing","phishing","email protection","email gateway","spam","secure email","proofpoint","email threat"],
+    partners: [
+      {id:"305110128367", name:"Proofpoint",             product:"Proofpoint Email Protection + TAP",      stage:"1"},
+      {id:"305144473334", name:"Cisco",                  product:"Cisco Secure Email Gateway",             stage:"3"},
+      {id:"305144473333", name:"Palo Alto Networks",     product:"Palo Alto Advanced Threat Prevention",   stage:"3"},
+      {id:"305375828718", name:"Darktrace",              product:"Darktrace Email",                        stage:"4"},
+      {id:"305380149978", name:"Datto",                  product:"Datto SaaS Defense (Email Security)",    stage:"2"},
+    ]
+  },
+  {
+    solution: "Security Awareness Training & Phishing Simulation",
+    category: "Cybersecurity",
+    keywords: ["security awareness","phishing simulation","security training","awareness training","human risk","social engineering","knowbe4","infosec iq"],
+    partners: [
+      {id:"305206772413", name:"KnowBe4",     product:"KnowBe4 Security Awareness Platform",   stage:"2"},
+      {id:"305378709199", name:"Infosec IQ",  product:"Infosec IQ Phishing + Awareness",       stage:"3"},
+      {id:"305110128367", name:"Proofpoint",  product:"Proofpoint Security Awareness Training", stage:"1"},
+    ]
+  },
+
+  // ── VULNERABILITY & RISK MANAGEMENT ──────────────────────────────────
+  {
+    solution: "Vulnerability Management & Scanning",
+    category: "Cybersecurity",
+    keywords: ["vulnerability","vulnerability management","vulnerability scanning","vuln","risk assessment","nessus","qualys vmdr","insightvm","tenable","patch","cve"],
+    partners: [
+      {id:"305241362115", name:"Tenable",      product:"Tenable.io / Nessus — Vulnerability Management", stage:"3"},
+      {id:"305206050535", name:"Qualys",       product:"Qualys VMDR (Vulnerability Management)",          stage:"1"},
+      {id:"305375828714", name:"CrowdStrike",  product:"CrowdStrike Falcon Spotlight",                    stage:"2"},
+      {id:"305110128362", name:"SentinelOne",  product:"SentinelOne Ranger (Asset Discovery)",            stage:"1"},
+      {id:"305377989329", name:"ConnectSecure",product:"ConnectSecure Vulnerability Scanning",            stage:"3"},
+      {id:"305380868847", name:"Varonis",      product:"Varonis Data Security (Exposure Management)",     stage:"1"},
+      {id:"305379429083", name:"Netwrix",      product:"Netwrix Auditor (Risk Assessment)",               stage:"2"},
+    ]
+  },
+  {
+    solution: "Cloud Security Posture Management (CSPM / CNAPP)",
+    category: "Cybersecurity",
+    keywords: ["cspm","cnapp","cloud security","cloud posture","cloud compliance","cloud misconfiguration","prisma cloud","defender for cloud"],
+    partners: [
+      {id:"305144473333", name:"Palo Alto Networks", product:"Prisma Cloud (CNAPP / CSPM)",              stage:"3"},
+      {id:"305107958491", name:"Microsoft Azure",    product:"Microsoft Defender for Cloud (CSPM)",      stage:"3"},
+      {id:"305206050535", name:"Qualys",             product:"Qualys Cloud Security Assessment",         stage:"1"},
+      {id:"305241362115", name:"Tenable",            product:"Tenable Cloud Security",                   stage:"3"},
+    ]
+  },
+  {
+    solution: "Zero Trust Data Security & Ransomware Protection",
+    category: "Cybersecurity",
+    keywords: ["zero trust data","ransomware","ransomware protection","data security","rubrik","immutable backup","cyber recovery","data resilience"],
+    partners: [
+      {id:"302487325431", name:"Rubrik",       product:"Rubrik Zero Trust Data Security",          stage:"3"},
+      {id:"305110128363", name:"Veeam",        product:"Veeam Data Platform (Ransomware Recovery)",stage:"3"},
+      {id:"305144473331", name:"CommVault",    product:"Commvault Disaster Recovery",              stage:"2"},
+      {id:"305375828714", name:"CrowdStrike",  product:"CrowdStrike Falcon Identity Protection",  stage:"2"},
+      {id:"305380149978", name:"Datto",        product:"Datto Ransomware Recovery",               stage:"2"},
+    ]
+  },
+  {
+    solution: "Data Loss Prevention (DLP) & Content Security",
+    category: "Cybersecurity",
+    keywords: ["dlp","data loss prevention","data leakage","content security","sensitive data","data exfiltration","varonis","netwrix"],
+    partners: [
+      {id:"305380868847", name:"Varonis",             product:"Varonis Data Security Platform (DLP)",  stage:"1"},
+      {id:"305379430097", name:"Kiteworks",           product:"Kiteworks Content Firewall (DLP)",      stage:"2"},
+      {id:"305379429083", name:"Netwrix",             product:"Netwrix Data Classification",           stage:"2"},
+      {id:"305144473333", name:"Palo Alto Networks",  product:"Prisma Cloud DLP",                      stage:"3"},
+      {id:"305107958491", name:"Microsoft Azure",     product:"Microsoft Purview (DLP)",               stage:"3"},
+    ]
+  },
+  {
+    solution: "Identity & Access Management (IAM / SSO / MFA)",
+    category: "Cybersecurity",
+    keywords: ["identity","iam","sso","single sign on","mfa","multi factor","authentication","access management","ping identity","identity management","identity governance","iga","privileged access","pam"],
+    partners: [
+      {id:"305143753409", name:"Ping Identity",            product:"PingOne SSO + PingID MFA + Identity Gov",  stage:"3"},
+      {id:"305144473334", name:"Cisco",                    product:"Cisco Duo Security (MFA + Zero Trust)",    stage:"3"},
+      {id:"305107958491", name:"Microsoft Azure",          product:"Microsoft Entra ID (Azure AD SSO/MFA)",    stage:"3"},
+      {id:"303036624597", name:"Manage Engine",            product:"ManageEngine ADManager + PAM360",          stage:"3"},
+      {id:"305379429083", name:"Netwrix",                  product:"Netwrix Privilege Secure (PAM)",           stage:"2"},
+    ]
+  },
+  {
+    solution: "Privileged Access Management (PAM / PIM)",
+    category: "Cybersecurity",
+    keywords: ["pam","pim","privileged access","privileged identity","privileged account","admin access","least privilege","secret management"],
+    partners: [
+      {id:"305143753409", name:"Ping Identity",  product:"Ping Identity PAM",                       stage:"3"},
+      {id:"303036624597", name:"Manage Engine",  product:"ManageEngine PAM360",                     stage:"3"},
+      {id:"305379429083", name:"Netwrix",        product:"Netwrix Privilege Secure",                stage:"2"},
+      {id:"305107958491", name:"Microsoft Azure",product:"Microsoft Entra Privileged Identity Mgmt",stage:"3"},
+    ]
+  },
+
+  // ── SIEM, SOC & THREAT INTELLIGENCE ──────────────────────────────────
+  {
+    solution: "SIEM & Log Management",
+    category: "Cybersecurity",
+    keywords: ["siem","security information","event management","log management","log analytics","splunk","qradar","sentinel","microsoft sentinel","security analytics"],
+    partners: [
+      {id:"305206050514", name:"Splunk",          product:"Splunk Enterprise Security (SIEM)",     stage:"2"},
+      {id:"305241361144", name:"IBM",             product:"IBM QRadar SIEM",                       stage:"3"},
+      {id:"305107958491", name:"Microsoft Azure", product:"Microsoft Sentinel (Cloud-Native SIEM)",stage:"3"},
+      {id:"303036624597", name:"Manage Engine",   product:"ManageEngine Log360 (SIEM)",            stage:"3"},
+      {id:"305206771415", name:"Solarwinds",      product:"SolarWinds Security Event Manager",     stage:"3"},
+    ]
+  },
+  {
+    solution: "Threat Intelligence & AI Threat Detection",
+    category: "Cybersecurity",
+    keywords: ["threat intelligence","threat detection","ai threat","threat hunting","ioc","indicators of compromise","threat feeds","darktrace","ai security"],
+    partners: [
+      {id:"305375828718", name:"Darktrace",          product:"Darktrace AI Threat Detection",       stage:"4"},
+      {id:"305375828714", name:"CrowdStrike",        product:"CrowdStrike Falcon Intelligence",     stage:"2"},
+      {id:"305241361144", name:"IBM",                product:"IBM X-Force Threat Intelligence",     stage:"3"},
+      {id:"305144473333", name:"Palo Alto Networks", product:"Cortex XSOAR Threat Intelligence",   stage:"3"},
+    ]
+  },
+  {
+    solution: "Security Orchestration, Automation & Response (SOAR)",
+    category: "Cybersecurity",
+    keywords: ["soar","security orchestration","security automation","playbook","incident automation","automated response"],
+    partners: [
+      {id:"305206050514", name:"Splunk",             product:"Splunk SOAR",                         stage:"2"},
+      {id:"305144473333", name:"Palo Alto Networks", product:"Cortex XSOAR",                        stage:"3"},
+      {id:"305241361144", name:"IBM",                product:"IBM Security QRadar SOAR",            stage:"3"},
+    ]
+  },
+
+  // ── BACKUP, DR & DATA PROTECTION ─────────────────────────────────────
+  {
+    solution: "Backup & Disaster Recovery",
+    category: "Cloud & Infrastructure",
+    keywords: ["backup","disaster recovery","dr","business continuity","data recovery","data protection","veeam","commvault","rubrik","datto","bcdr"],
+    partners: [
+      {id:"305110128363", name:"Veeam",      product:"Veeam Data Platform (Backup & Replication)",  stage:"3"},
+      {id:"305144473331", name:"CommVault",  product:"Commvault Cloud Backup & Recovery",           stage:"2"},
+      {id:"302487325431", name:"Rubrik",     product:"Rubrik Cloud Vault (Backup & DR)",            stage:"3"},
+      {id:"305380149978", name:"Datto",      product:"Datto SIRIS (Backup + BDR)",                 stage:"2"},
+      {id:"305206772419", name:"Dropsuite",  product:"Dropsuite Cloud Backup (Email + M365)",      stage:"1"},
+      {id:"305241361144", name:"IBM",        product:"IBM Spectrum Protect (Backup & DR)",         stage:"3"},
+    ]
+  },
+  {
+    solution: "Cloud Email & Microsoft 365 Backup",
+    category: "Cloud & Infrastructure",
+    keywords: ["m365 backup","microsoft 365 backup","office 365 backup","email backup","teams backup","sharepoint backup","google workspace backup"],
+    partners: [
+      {id:"305206772419", name:"Dropsuite", product:"Dropsuite M365 + Google Workspace Backup", stage:"1"},
+      {id:"305110128363", name:"Veeam",     product:"Veeam Backup for Microsoft 365",          stage:"3"},
+      {id:"305380149978", name:"Datto",     product:"Datto SaaS Protection (M365 Backup)",     stage:"2"},
+      {id:"305144473331", name:"CommVault", product:"Commvault Complete Backup for M365",      stage:"2"},
+    ]
+  },
+
+  // ── CLOUD PLATFORMS & INFRASTRUCTURE ─────────────────────────────────
+  {
+    solution: "Cloud Infrastructure (IaaS / PaaS)",
+    category: "Cloud & Infrastructure",
+    keywords: ["cloud","iaas","paas","cloud infrastructure","cloud platform","cloud computing","hyperscaler","azure","aws","google cloud","cloud hosting","government cloud","fedramp cloud"],
+    partners: [
+      {id:"305107958491", name:"Microsoft Azure",          product:"Microsoft Azure (Cloud Infrastructure)",    stage:"3"},
+      {id:"305109398256", name:"Amazon Web Services (AWS)", product:"AWS (IaaS / GovCloud)",                    stage:"3"},
+      {id:"305241361144", name:"IBM",                      product:"IBM Cloud",                                stage:"3"},
+    ]
+  },
+  {
+    solution: "Hybrid Cloud & Virtualization",
+    category: "Cloud & Infrastructure",
+    keywords: ["hybrid cloud","virtualization","vmware","virtual machine","hypervisor","nutanix","openshift","kubernetes","container","hyperconverged","hci"],
+    partners: [
+      {id:"305109398263", name:"Red Hat",       product:"Red Hat OpenShift (Kubernetes / Hybrid Cloud)", stage:"2"},
+      {id:"305107958491", name:"Microsoft Azure",product:"Azure Arc (Hybrid Cloud Management)",         stage:"3"},
+      {id:"305109398256", name:"Amazon Web Services (AWS)", product:"AWS Hybrid (Outposts)",             stage:"3"},
+      {id:"305241361144", name:"IBM",           product:"IBM Cloud Pak / Hybrid Cloud",                 stage:"3"},
+    ]
+  },
+  {
+    solution: "Managed WordPress & Web Application Hosting",
+    category: "Cloud & Infrastructure",
+    keywords: ["wordpress","web hosting","drupal hosting","managed hosting","cms hosting","website hosting","digital experience"],
+    partners: [
+      {id:"305381589696", name:"WP Engine",  product:"WP Engine Managed WordPress Hosting",  stage:"3"},
+      {id:"305141582576", name:"Amazee.io",  product:"amazee.io Managed Drupal Hosting",      stage:"3"},
+    ]
+  },
+  {
+    solution: "Cloud Monitoring, Observability & APM",
+    category: "Cloud & Infrastructure",
+    keywords: ["monitoring","observability","apm","application performance","infrastructure monitoring","cloud monitoring","datadog","dynatrace","splunk observability","log monitoring","metrics"],
+    partners: [
+      {id:"305059312372", name:"DataDog",      product:"Datadog Full-Stack Monitoring + SIEM",          stage:"3"},
+      {id:"304982893299", name:"Dynatrace",    product:"Dynatrace APM + Full-Stack Observability",      stage:"1"},
+      {id:"305206050514", name:"Splunk",       product:"Splunk Observability Cloud",                    stage:"2"},
+      {id:"305206771415", name:"Solarwinds",   product:"SolarWinds Server & Application Monitor",      stage:"3"},
+      {id:"305107958476", name:"SolarWinds",   product:"SolarWinds Network Performance Monitor",       stage:"3"},
+      {id:"305241361144", name:"IBM",          product:"IBM Instana Observability",                     stage:"3"},
+    ]
+  },
+  {
+    solution: "Storage & Flash Array",
+    category: "Cloud & Infrastructure",
+    keywords: ["storage","flash storage","all flash","san","nas","storage array","data storage","mass storage","versity","ibm storage","flash array"],
+    partners: [
+      {id:"304728116925", name:"Versity Software", product:"Versity Swarm (Exabyte-Scale Object Storage)", stage:"1"},
+      {id:"305241361144", name:"IBM",              product:"IBM FlashSystem & DS8000",                   stage:"3"},
+    ]
+  },
+
+  // ── NETWORKING ────────────────────────────────────────────────────────
+  {
+    solution: "Network Switches, Routing & Wireless (LAN/WLAN)",
+    category: "Networking & Infrastructure",
+    keywords: ["network switch","switching","routing","wireless","wifi","wlan","access point","campus network","networking","lan","network infrastructure"],
+    partners: [
+      {id:"305144473334", name:"Cisco",           product:"Cisco Catalyst Switches + Meraki Wireless",      stage:"3"},
+      {id:"304982893297", name:"Extreme Networks",product:"Extreme Networks Campus Fabric + Wireless",      stage:"3"},
+      {id:"305107238588", name:"Trimble",         product:"Trimble Positioning & Network Solutions",        stage:"2"},
+    ]
+  },
+  {
+    solution: "Network Performance Monitoring & Management",
+    category: "Networking & Infrastructure",
+    keywords: ["network monitoring","npm","network management","network performance","network operations","snmp","bandwidth","netflow"],
+    partners: [
+      {id:"305107958476", name:"SolarWinds",  product:"SolarWinds Network Performance Monitor (NPM)",  stage:"3"},
+      {id:"305206771415", name:"Solarwinds",  product:"SolarWinds Network Configuration Manager",     stage:"3"},
+      {id:"303036624597", name:"Manage Engine", product:"ManageEngine OpManager (Network Monitoring)", stage:"3"},
+      {id:"305059312372", name:"DataDog",     product:"Datadog Network Performance Monitoring",        stage:"3"},
+    ]
+  },
+
+  // ── ITSM, EAM & ASSET MANAGEMENT ─────────────────────────────────────
+  {
+    solution: "IT Service Management (ITSM / Help Desk)",
+    category: "ITSM & Asset Management",
+    keywords: ["itsm","it service management","help desk","helpdesk","service desk","ticketing","incident management","service catalog","itil","servicenow","jira service","manage engine servicedesk"],
+    partners: [
+      {id:"304982892243", name:"ServiceNow",    product:"ServiceNow ITSM (Platform)",                  stage:"3"},
+      {id:"305107958476", name:"SolarWinds",    product:"SolarWinds Web Help Desk",                    stage:"3"},
+      {id:"303036624597", name:"Manage Engine", product:"ManageEngine ServiceDesk Plus",               stage:"3"},
+      {id:"305109398247", name:"Atlassian",     product:"Jira Service Management (ITSM)",              stage:"4"},
+      {id:"305057873635", name:"ClickUp",       product:"ClickUp (Lightweight ITSM / Task Tracking)",  stage:"2"},
+    ]
+  },
+  {
+    solution: "IT Operations Management (ITOM / AIOps)",
+    category: "ITSM & Asset Management",
+    keywords: ["itom","it operations","aiops","event management","service operations","it automation","cmdb","configuration management","asset inventory"],
+    partners: [
+      {id:"304982892243", name:"ServiceNow",    product:"ServiceNow ITOM + AIOps",                 stage:"3"},
+      {id:"303036624597", name:"Manage Engine", product:"ManageEngine OpManager (ITOM)",           stage:"3"},
+      {id:"305206771415", name:"Solarwinds",    product:"SolarWinds Observability (ITOM)",         stage:"3"},
+      {id:"305059312372", name:"DataDog",       product:"Datadog AIOps + Event Management",        stage:"3"},
+    ]
+  },
+  {
+    solution: "Enterprise Asset Management (EAM) & CMMS",
+    category: "ITSM & Asset Management",
+    keywords: ["eam","asset management","enterprise asset","cmms","computerized maintenance","maintenance management","work order","maximo","preventive maintenance","facilities management"],
+    partners: [
+      {id:"304980734658", name:"IBM Maximo",  product:"IBM Maximo Application Suite (EAM)",         stage:"3"},
+      {id:"305380868851", name:"Fiix",        product:"Fiix CMMS (Maintenance Management)",         stage:"1"},
+      {id:"305107238588", name:"Trimble",     product:"Trimble Cityworks (Infrastructure EAM)",     stage:"2"},
+    ]
+  },
+  {
+    solution: "Remote Monitoring & Management (RMM)",
+    category: "ITSM & Asset Management",
+    keywords: ["rmm","remote monitoring","remote management","patch management","remote access","endpoint management","ninja","ninjaone"],
+    partners: [
+      {id:"305375109849", name:"NinjaOne",      product:"NinjaOne RMM + Patch Management",          stage:"1"},
+      {id:"303036624597", name:"Manage Engine", product:"ManageEngine Endpoint Central (RMM/UEM)",  stage:"3"},
+      {id:"305206771415", name:"Solarwinds",    product:"SolarWinds RMM",                           stage:"3"},
+    ]
+  },
+  {
+    solution: "Project Management & Collaboration",
+    category: "ITSM & Asset Management",
+    keywords: ["project management","task management","collaboration","workflow","jira","confluence","clickup","trello","productivity","team management"],
+    partners: [
+      {id:"305057873635", name:"ClickUp",   product:"ClickUp Project & Task Management",           stage:"2"},
+      {id:"305109398247", name:"Atlassian", product:"Atlassian Jira + Confluence + Trello",         stage:"4"},
+    ]
+  },
+  {
+    solution: "Incident Response & On-Call Management",
+    category: "ITSM & Asset Management",
+    keywords: ["incident response","on call","pagerduty","alerting","outage management","escalation","alert management"],
+    partners: [
+      {id:"305205332669", name:"PagerDuty", product:"PagerDuty Incident Management + AIOps", stage:"1"},
+      {id:"304982892243", name:"ServiceNow",product:"ServiceNow ITSM Incident Management",   stage:"3"},
+    ]
+  },
+
+  // ── ERP, FINANCE & ENTERPRISE APPS ───────────────────────────────────
+  {
+    solution: "Enterprise Resource Planning (ERP)",
+    category: "ERP & Enterprise Apps",
+    keywords: ["erp","enterprise resource planning","finance erp","enterprise software","sap","oracle erp","dynamics 365","peoplesoft","financials","accounting"],
+    partners: [
+      {id:"305207490243", name:"SAP",                   product:"SAP S/4HANA Cloud ERP",                 stage:"3"},
+      {id:"305142303430", name:"Oracle",                product:"Oracle Cloud ERP / Fusion Financials",  stage:"3"},
+      {id:"304981453504", name:"Microsoft Dynamics 365",product:"Microsoft Dynamics 365 Finance & Ops",  stage:"3"},
+    ]
+  },
+  {
+    solution: "Contract Lifecycle Management (CLM)",
+    category: "ERP & Enterprise Apps",
+    keywords: ["contract management","clm","contract lifecycle","contract compliance","contract ai","icertis","contract risk","procurement contracts"],
+    partners: [
+      {id:"305377989356", name:"Icertis", product:"Icertis Contract Intelligence Platform", stage:"1"},
+    ]
+  },
+  {
+    solution: "Database Management & DevOps",
+    category: "ERP & Enterprise Apps",
+    keywords: ["database","database devops","database management","sql","database monitoring","redgate","db change automation","database deployment"],
+    partners: [
+      {id:"305379430087", name:"Redgate",  product:"Redgate Database DevOps Tools",         stage:"2"},
+      {id:"305142303430", name:"Oracle",   product:"Oracle Database (Enterprise Edition)",  stage:"3"},
+      {id:"305241361144", name:"IBM",      product:"IBM Db2",                               stage:"3"},
+    ]
+  },
+
+  // ── HCM & WORKFORCE ───────────────────────────────────────────────────
+  {
+    solution: "Human Capital Management (HCM / HRIS)",
+    category: "HCM & HR",
+    keywords: ["hcm","hris","human capital","human resources","workforce management","hr platform","workday","adp","ukg","hr software","hr management"],
+    partners: [
+      {id:"305206049513", name:"Workday",  product:"Workday HCM (Finance + HR + Planning)",     stage:"4"},
+      {id:"305144472305", name:"ADP",      product:"ADP Workforce Now (HCM + Payroll)",         stage:"2"},
+      {id:"305206049514", name:"UKG",      product:"UKG Pro (formerly Ultimate + Kronos)",      stage:"4"},
+      {id:"305207490243", name:"SAP",      product:"SAP SuccessFactors HCM",                   stage:"3"},
+      {id:"305142303430", name:"Oracle",   product:"Oracle HCM Cloud",                         stage:"3"},
+      {id:"304981453504", name:"Microsoft Dynamics 365", product:"Dynamics 365 Human Resources",stage:"3"},
+    ]
+  },
+  {
+    solution: "Payroll Management",
+    category: "HCM & HR",
+    keywords: ["payroll","payroll processing","salary","wage","payroll management","adp payroll","payroll software"],
+    partners: [
+      {id:"305144472305", name:"ADP",      product:"ADP Payroll Processing",              stage:"2"},
+      {id:"305206049514", name:"UKG",      product:"UKG Dimensions Payroll",             stage:"4"},
+      {id:"305207490243", name:"SAP",      product:"SAP Payroll",                        stage:"3"},
+      {id:"305142303430", name:"Oracle",   product:"Oracle Payroll Cloud",               stage:"3"},
+    ]
+  },
+  {
+    solution: "Time & Attendance / Workforce Scheduling",
+    category: "HCM & HR",
+    keywords: ["time tracking","attendance","workforce scheduling","time and attendance","labor management","tcp","time management","employee scheduling","clock in"],
+    partners: [
+      {id:"305380869826", name:"TCP",   product:"TCP Time & Attendance + Scheduling",  stage:"2"},
+      {id:"305206049514", name:"UKG",   product:"UKG Dimensions (Kronos) Workforce Mgmt",stage:"4"},
+      {id:"305144472305", name:"ADP",   product:"ADP Time & Attendance",              stage:"2"},
+    ]
+  },
+
+  // ── CRM & CITIZEN ENGAGEMENT ──────────────────────────────────────────
+  {
+    solution: "CRM & Customer Engagement Platform",
+    category: "CRM & Business Apps",
+    keywords: ["crm","customer relationship","customer engagement","salesforce","hubspot","dynamics crm","zoho crm","constituent management","citizen engagement"],
+    partners: [
+      {id:"304980732635", name:"Salesforce",            product:"Salesforce CRM / Government Cloud",          stage:"3"},
+      {id:"305057152701", name:"Hubspot",               product:"HubSpot CRM + Marketing Hub",               stage:"3"},
+      {id:"304981453504", name:"Microsoft Dynamics 365",product:"Dynamics 365 Customer Engagement (CRM)",    stage:"3"},
+      {id:"305455895266", name:"Zoho",                  product:"Zoho CRM + Business Apps Suite",            stage:"1"},
+    ]
+  },
+  {
+    solution: "Marketing Automation",
+    category: "CRM & Business Apps",
+    keywords: ["marketing automation","email marketing","marketing campaigns","lead nurturing","salesforce marketing","hubspot marketing","demand generation"],
+    partners: [
+      {id:"304980732635", name:"Salesforce", product:"Salesforce Marketing Cloud",                stage:"3"},
+      {id:"305057152701", name:"Hubspot",    product:"HubSpot Marketing Hub",                    stage:"3"},
+      {id:"305455895266", name:"Zoho",       product:"Zoho Campaigns + Zoho Marketing Automation",stage:"1"},
+    ]
+  },
+
+  // ── DATA, ANALYTICS & AI ──────────────────────────────────────────────
+  {
+    solution: "Data Platform & Lakehouse (Big Data / AI/ML)",
+    category: "Data & Analytics",
+    keywords: ["data platform","data lakehouse","big data","machine learning","ml","ai platform","data engineering","data science","databricks","spark","delta lake","snowflake"],
+    partners: [
+      {id:"305107958496", name:"Databricks",         product:"Databricks Lakehouse Platform (AI + Data Eng)",stage:"3"},
+      {id:"305109398256", name:"Amazon Web Services (AWS)", product:"AWS SageMaker + EMR (ML + Big Data)",   stage:"3"},
+      {id:"305107958491", name:"Microsoft Azure",    product:"Azure Databricks + Synapse Analytics",       stage:"3"},
+      {id:"305241361144", name:"IBM",                product:"IBM watsonx AI + Data Platform",             stage:"3"},
+    ]
+  },
+  {
+    solution: "Data Integration & ETL",
+    category: "Data & Analytics",
+    keywords: ["data integration","etl","data pipeline","data transformation","informatica","data ingestion","api integration","ipaas","data sync"],
+    partners: [
+      {id:"305059312361", name:"Informatica",       product:"Informatica Intelligent Data Management Cloud (IDMC)",stage:"1"},
+      {id:"305107958491", name:"Microsoft Azure",   product:"Azure Data Factory (ETL / Data Integration)",        stage:"3"},
+      {id:"305109398256", name:"Amazon Web Services (AWS)", product:"AWS Glue (ETL / Data Integration)",           stage:"3"},
+      {id:"305241361144", name:"IBM",               product:"IBM DataStage / InfoSphere DataStage",               stage:"3"},
+    ]
+  },
+  {
+    solution: "Master Data Management (MDM) & Data Governance",
+    category: "Data & Analytics",
+    keywords: ["master data","mdm","data governance","data quality","data catalog","data lineage","informatica mdm","data management"],
+    partners: [
+      {id:"305059312361", name:"Informatica",    product:"Informatica MDM + Data Governance",     stage:"1"},
+      {id:"305107958491", name:"Microsoft Azure",product:"Microsoft Purview (Data Governance)",   stage:"3"},
+      {id:"305241361144", name:"IBM",            product:"IBM InfoSphere MDM",                    stage:"3"},
+    ]
+  },
+  {
+    solution: "Business Intelligence & Analytics (BI)",
+    category: "Data & Analytics",
+    keywords: ["business intelligence","bi","analytics","reporting","dashboard","data visualization","power bi","tableau","splunk analytics"],
+    partners: [
+      {id:"305206050514", name:"Splunk",         product:"Splunk Analytics + ITSI",              stage:"2"},
+      {id:"305059312372", name:"DataDog",        product:"Datadog Dashboards + Analytics",       stage:"3"},
+      {id:"305107958491", name:"Microsoft Azure",product:"Microsoft Power BI",                   stage:"3"},
+      {id:"305109398256", name:"Amazon Web Services (AWS)", product:"Amazon QuickSight (BI)",    stage:"3"},
+      {id:"304980732635", name:"Salesforce",     product:"Salesforce Einstein Analytics / Tableau",stage:"3"},
+    ]
+  },
+  {
+    solution: "Secure File Transfer & Content Communication",
+    category: "Data & Analytics",
+    keywords: ["secure file transfer","mft","managed file transfer","secure content","file sharing","secure sharing","kiteworks","sftp"],
+    partners: [
+      {id:"305379430097", name:"Kiteworks", product:"Kiteworks Secure Content Communications (MFT + SFTP)", stage:"2"},
+    ]
+  },
+
+  // ── DOCUMENT MANAGEMENT ───────────────────────────────────────────────
+  {
+    solution: "Enterprise Content Management (ECM) & Document Management",
+    category: "Document Management",
+    keywords: ["ecm","enterprise content","document management","content management","laserfiche","opentext","records","document capture","imaging"],
+    partners: [
+      {id:"305376549584", name:"Laserfiche",  product:"Laserfiche ECM + Business Process Automation", stage:"2"},
+      {id:"305059311305", name:"OpenText",    product:"OpenText Content Suite (ECM)",                 stage:"4"},
+      {id:"305107958491", name:"Microsoft Azure", product:"Microsoft SharePoint Online",             stage:"3"},
+    ]
+  },
+  {
+    solution: "Records Management & Compliance Archiving",
+    category: "Document Management",
+    keywords: ["records management","records retention","archiving","compliance archive","document retention","records compliance","government records","laserfiche records"],
+    partners: [
+      {id:"305376549584", name:"Laserfiche",  product:"Laserfiche Records Management",          stage:"2"},
+      {id:"305059311305", name:"OpenText",    product:"OpenText Records Management",            stage:"4"},
+      {id:"305241361144", name:"IBM",         product:"IBM FileNet Content Manager",            stage:"3"},
+      {id:"305107958491", name:"Microsoft Azure", product:"Microsoft Purview Records Mgmt",    stage:"3"},
+    ]
+  },
+  {
+    solution: "SharePoint & Microsoft 365 Migration",
+    category: "Document Management",
+    keywords: ["sharepoint migration","microsoft 365 migration","m365 migration","teams migration","sharepoint","office 365 migration","sharegate","migration tool"],
+    partners: [
+      {id:"305108679358", name:"Sharegate",          product:"ShareGate Desktop / Online (M365 Migration)", stage:"3"},
+      {id:"305144473331", name:"CommVault",          product:"Commvault Migrate for M365",                  stage:"2"},
+    ]
+  },
+  {
+    solution: "Legal Practice Management",
+    category: "Document Management",
+    keywords: ["legal","legal practice","law firm","case management","legal billing","legal document","clio","court"],
+    partners: [
+      {id:"305055712985", name:"Clio", product:"Clio Manage (Legal Practice Management)", stage:"3"},
+    ]
+  },
+
+  // ── DEVSECOPS & AUTOMATION ────────────────────────────────────────────
+  {
+    solution: "DevSecOps & CI/CD Platform",
+    category: "Cloud & Infrastructure",
+    keywords: ["devsecops","ci/cd","continuous integration","continuous delivery","devops","pipeline","gitlab","github","bitbucket","software factory"],
+    partners: [
+      {id:"305109398263", name:"Red Hat",    product:"Red Hat OpenShift (DevSecOps Platform)",         stage:"2"},
+      {id:"305109398247", name:"Atlassian",  product:"Atlassian Bitbucket + Bamboo (CI/CD)",           stage:"4"},
+      {id:"305107958491", name:"Microsoft Azure", product:"Azure DevOps + GitHub (CI/CD)",            stage:"3"},
+      {id:"305109398256", name:"Amazon Web Services (AWS)", product:"AWS CodePipeline + CodeBuild",    stage:"3"},
+    ]
+  },
+  {
+    solution: "Infrastructure as Code (IaC) & Automation",
+    category: "Cloud & Infrastructure",
+    keywords: ["infrastructure as code","iac","terraform","ansible","automation","configuration management","red hat ansible","cloud automation"],
+    partners: [
+      {id:"305109398263", name:"Red Hat",    product:"Red Hat Ansible Automation Platform",           stage:"2"},
+      {id:"305107958491", name:"Microsoft Azure", product:"Azure Resource Manager / Bicep (IaC)",    stage:"3"},
+      {id:"305109398256", name:"Amazon Web Services (AWS)", product:"AWS CloudFormation",             stage:"3"},
+    ]
+  },
+
+  // ── DIGITAL GOVERNMENT & GIS ──────────────────────────────────────────
+  {
+    solution: "Permitting, Licensing & Civic Platform",
+    category: "Digital Government",
+    keywords: ["permitting","licensing","permit","civic platform","code enforcement","regulatory","government platform","accela","inspections","building permits"],
+    partners: [
+      {id:"305377269476", name:"Accela", product:"Accela Civic Platform (Permitting + Licensing + Inspections)", stage:"1"},
+    ]
+  },
+  {
+    solution: "GIS & Spatial Analytics Platform",
+    category: "GIS & Engineering",
+    keywords: ["gis","spatial","arcgis","esri","mapping","geospatial","geographic information","maps","location intelligence","urban planning","utility gis"],
+    partners: [
+      {id:"304980732622", name:"ArcGIS",   product:"ArcGIS Online + ArcGIS Enterprise (Esri)",       stage:"1"},
+      {id:"305107238588", name:"Trimble",  product:"Trimble Geospatial Solutions",                   stage:"2"},
+    ]
+  },
+  {
+    solution: "Construction & Infrastructure Engineering Software",
+    category: "GIS & Engineering",
+    keywords: ["construction","civil engineering","infrastructure","public works","dot","transportation","trimble","geospatial","field operations"],
+    partners: [
+      {id:"305107238588", name:"Trimble", product:"Trimble Construction + Infrastructure Software", stage:"2"},
+    ]
+  },
+
+  // ── TRAINING, CERTIFICATION & WORKFORCE DEV ───────────────────────────
+  {
+    solution: "Learning Management System (LMS) & eLearning",
+    category: "Training & Certification",
+    keywords: ["lms","learning management","elearning","e-learning","training platform","online training","absorb lms","compliance training","employee development"],
+    partners: [
+      {id:"305057153725", name:"Absorb LMS",  product:"Absorb LMS (Cloud-Based Learning Platform)",  stage:"1"},
+      {id:"303036624597", name:"Manage Engine", product:"ManageEngine IT Training Integration",       stage:"3"},
+    ]
+  },
+  {
+    solution: "IT Certification & Professional Credentialing",
+    category: "Training & Certification",
+    keywords: ["certification","itil","prince2","peoplecert","credentials","professional certification","it training","it cert","certified"],
+    partners: [
+      {id:"305379429110", name:"PeopleCert", product:"PeopleCert — ITIL, PRINCE2, DevOps Certifications", stage:"3"},
+    ]
+  },
+  {
+    solution: "Workforce Development & Apprenticeship Programs",
+    category: "Training & Certification",
+    keywords: ["workforce development","apprenticeship","talent development","career readiness","edmo","skills training","technology training","workforce programs"],
+    partners: [
+      {id:"305377269464", name:"EDMO", product:"EDMO Workforce Development + Technology Apprenticeship Programs", stage:"3"},
+    ]
+  },
+  {
+    solution: "Cybersecurity Compliance Training & Certification",
+    category: "Training & Certification",
+    keywords: ["cybersecurity training","security certification","compliance training","security education","knowbe4","infosec training","cyber awareness","hipaa training","nist training"],
+    partners: [
+      {id:"305206772413", name:"KnowBe4",     product:"KnowBe4 Compliance + Security Awareness",      stage:"2"},
+      {id:"305378709199", name:"Infosec IQ",  product:"Infosec IQ Compliance Training",               stage:"3"},
+      {id:"305379429110", name:"PeopleCert",  product:"PeopleCert Cybersecurity Certifications",      stage:"3"},
+    ]
+  },
+
+  // ── DISTRIBUTORS ──────────────────────────────────────────────────────
+  {
+    solution: "Government IT Procurement & Marketplace",
+    category: "Distributors",
+    keywords: ["government procurement","government it","it procurement","marketplace","gsa","contract vehicle","carahsoft","government reseller"],
+    partners: [
+      {id:"302984649416", name:"Carahsoft",        product:"Carahsoft Government IT Marketplace",      stage:"3"},
+      {id:"305241361124", name:"SHI International",product:"SHI Government IT Solutions & Procurement",stage:"3"},
+      {id:"305107957494", name:"CDW",              product:"CDW Government (CDWG) Marketplace",        stage:"3"},
+    ]
+  },
+  {
+    solution: "Cloud Marketplace & Distribution (Multi-Vendor)",
+    category: "Distributors",
+    keywords: ["cloud marketplace","distribution","distributor","multi vendor","pax8","td synnex","arrow","ingram","cloud distribution","reseller channel"],
+    partners: [
+      {id:"305241361086", name:"Pax8",         product:"Pax8 Cloud Marketplace (Microsoft, Security, SaaS)",  stage:"3"},
+      {id:"305206770422", name:"TD SYNNEX",    product:"TD SYNNEX Distribution (IBM, Cisco, Microsoft)",       stage:"3"},
+      {id:"305375108844", name:"ArrowSphere",  product:"ArrowSphere Cloud Marketplace",                       stage:"3"},
+      {id:"305205331657", name:"Ingram Micro", product:"Ingram Micro Cloud Marketplace",                      stage:"1"},
+      {id:"303033039555", name:"Nuologix",     product:"Nuologix (ManageEngine Distribution)",                stage:"3"},
+    ]
+  },
+
+  // ── HIGHER EDUCATION ──────────────────────────────────────────────────
+  {
+    solution: "Higher Education ERP & Student Information System",
+    category: "Education Technology",
+    keywords: ["higher education","university","college","student information","sis","ellucian","banner","colleague","higher ed erp","academic"],
+    partners: [
+      {id:"305206770390", name:"Ellucian",  product:"Ellucian Banner / Colleague (Higher Ed ERP + SIS)", stage:"4"},
+      {id:"305142303430", name:"Oracle",    product:"Oracle PeopleSoft Campus Solutions",               stage:"3"},
+    ]
+  },
+
+  // ── GRC & COMPLIANCE ──────────────────────────────────────────────────
+  {
+    solution: "Governance, Risk & Compliance (GRC)",
+    category: "ITSM & Asset Management",
+    keywords: ["grc","governance","risk management","compliance management","audit","risk compliance","servicenow grc","policy management","risk assessment","regulatory compliance","nist","fisma","cmmc"],
+    partners: [
+      {id:"304982892243", name:"ServiceNow",    product:"ServiceNow GRC + Integrated Risk Management", stage:"3"},
+      {id:"305241361144", name:"IBM",           product:"IBM OpenPages GRC Platform",                 stage:"3"},
+      {id:"305379429083", name:"Netwrix",       product:"Netwrix Compliance & Risk Management",       stage:"2"},
+      {id:"305107958491", name:"Microsoft Azure",product:"Microsoft Purview Compliance Portal",       stage:"3"},
+    ]
+  },
+];
+
+
+
+
+const NICHE_DEFAULT=[
+  {category:"Career Exploration & Planning Software",rfps:"4–7",revenue:"$80K–$250K",vendors:[
+    {name:"Xello",type:"Niche",status:"Not Started"},
+    {name:"Naviance (PowerSchool)",type:"Common",status:"Not Started"},
+    {name:"Kuder Navigator",type:"Niche",status:"Not Started"},
+    {name:"Career Coach (Lightcast/Emsi)",type:"Niche",status:"Not Started"},
+    {name:"Handshake",type:"Common",status:"Not Started"}
+  ]},
+  {category:"Student Transition Planning Software",rfps:"3–6",revenue:"$100K–$300K",vendors:[
+    {name:"Goalview",type:"Niche",status:"Not Started"},
+    {name:"Frontline IEP (Special Ed)",type:"Common",status:"Not Started"},
+    {name:"Infinite Campus",type:"Common",status:"Not Started"},
+    {name:"iGradPlus",type:"Niche",status:"Not Started"},
+    {name:"Thrively",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Groundwater & Water Data Management Platform",rfps:"3–6",revenue:"$150K–$600K",vendors:[
+    {name:"AQUARIUS (Aquatic Informatics)",type:"Niche",status:"Not Started"},
+    {name:"ArcGIS Water Utilities (Esri)",type:"Common",status:"Not Started"},
+    {name:"Hach WIMS",type:"Niche",status:"Not Started"},
+    {name:"HydroGeoAnalyst (Waterloo Hydrogeologic)",type:"Niche",status:"Not Started"},
+    {name:"WaterTrax",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"AI & Agentic AI Governance Platform",rfps:"5–9",revenue:"$200K–$800K",vendors:[
+    {name:"IBM OpenScale / watsonx.governance",type:"Common",status:"Not Started"},
+    {name:"Microsoft Azure Responsible AI",type:"Common",status:"Not Started"},
+    {name:"Credo AI",type:"Niche",status:"Not Started"},
+    {name:"Arthur AI",type:"Niche",status:"Not Started"},
+    {name:"Fiddler AI",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Community Planning & Development Software",rfps:"6–10",revenue:"$200K–$900K",vendors:[
+    {name:"Accela",type:"Common",status:"Not Started"},
+    {name:"OpenGov / Cartegraph",type:"Common",status:"Not Started"},
+    {name:"Granicus",type:"Common",status:"Not Started"},
+    {name:"Tyler EnerGov",type:"Common",status:"Not Started"},
+    {name:"CivicPlus",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Grants Management Solution Platform",rfps:"6–10",revenue:"$150K–$600K",vendors:[
+    {name:"Fluxx",type:"Common",status:"Not Started"},
+    {name:"Amplifund",type:"Niche",status:"Not Started"},
+    {name:"Submittable",type:"Common",status:"Not Started"},
+    {name:"SmartSimple GovGrants",type:"Niche",status:"Not Started"},
+    {name:"eCivis",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Education Abroad / Study Abroad Platform",rfps:"2–4",revenue:"$80K–$200K",vendors:[
+    {name:"Terra Dotta",type:"Niche",status:"Not Started"},
+    {name:"Horizons Atlas (Ellucian)",type:"Niche",status:"Not Started"},
+    {name:"GoAbroad Platform",type:"Niche",status:"Not Started"},
+    {name:"MyStudyAbroad",type:"Niche",status:"Not Started"},
+    {name:"Vialto Partners",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Time & Attendance / Workforce Scheduling",rfps:"10–18",revenue:"$150K–$700K",vendors:[
+    {name:"UKG Dimensions (Kronos)",type:"Common",status:"Not Started"},
+    {name:"ADP Workforce Now",type:"Common",status:"Not Started"},
+    {name:"Ceridian Dayforce",type:"Common",status:"Not Started"},
+    {name:"Deputy",type:"Niche",status:"Not Started"},
+    {name:"Attendance on Demand",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Data Tracking & Social Services Case Management",rfps:"10–16",revenue:"$200K–$1.2M",vendors:[
+    {name:"Salesforce Government Cloud",type:"Common",status:"Not Started"},
+    {name:"Microsoft Dynamics 365",type:"Common",status:"Not Started"},
+    {name:"Apricot by Bonterra",type:"Niche",status:"Not Started"},
+    {name:"CaseWorthy (merged with Eccovia)",type:"Niche",status:"Not Started"},
+    {name:"Caspio",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"EHR Privacy Monitoring Software",rfps:"4–7",revenue:"$200K–$700K",vendors:[
+    {name:"Imprivata FairWarning",type:"Common",status:"Not Started"},
+    {name:"Protenus",type:"Niche",status:"Not Started"},
+    {name:"Iatric Systems (Privacy Analytics)",type:"Niche",status:"Not Started"},
+    {name:"Seceon aiSIEM",type:"Niche",status:"Not Started"},
+    {name:"Verato",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Web-Based Digital Signature Solution",rfps:"8–14",revenue:"$50K–$350K",vendors:[
+    {name:"DocuSign",type:"Common",status:"Not Started"},
+    {name:"Adobe Acrobat Sign",type:"Common",status:"Not Started"},
+    {name:"OneSpan Sign",type:"Common",status:"Not Started"},
+    {name:"PandaDoc",type:"Common",status:"Not Started"},
+    {name:"SignNow (airSlate)",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"AI Platform for Permit & Plan Review",rfps:"5–9",revenue:"$250K–$900K",vendors:[
+    {name:"Avolve ProjectDox",type:"Common",status:"Not Started"},
+    {name:"Bluebeam Revu",type:"Common",status:"Not Started"},
+    {name:"OpenGov Permitting & Licensing",type:"Niche",status:"Not Started"},
+    {name:"Symbium",type:"Niche",status:"Not Started"},
+    {name:"ePlans (EnerGov / Tyler)",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Student Engagement & Co-Curricular Management",rfps:"5–9",revenue:"$100K–$400K",vendors:[
+    {name:"Anthology (Campus Labs)",type:"Common",status:"Not Started"},
+    {name:"Presence",type:"Niche",status:"Not Started"},
+    {name:"Suitable",type:"Niche",status:"Not Started"},
+    {name:"Symplicity CSM",type:"Niche",status:"Not Started"},
+    {name:"EAB Navigate",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"New Student Engagement & Onboarding Platform",rfps:"4–7",revenue:"$80K–$250K",vendors:[
+    {name:"Technolutions Slate",type:"Common",status:"Not Started"},
+    {name:"Mongoose Harmony",type:"Niche",status:"Not Started"},
+    {name:"Element451",type:"Niche",status:"Not Started"},
+    {name:"Civitas Learning",type:"Niche",status:"Not Started"},
+    {name:"Ellucian Recruit",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Fleet & Asset Management Software",rfps:"8–14",revenue:"$150K–$600K",vendors:[
+    {name:"Verizon Connect",type:"Common",status:"Not Started"},
+    {name:"Samsara",type:"Common",status:"Not Started"},
+    {name:"AssetWorks",type:"Niche",status:"Not Started"},
+    {name:"Geotab",type:"Common",status:"Not Started"},
+    {name:"RTA Fleet Management",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Court & Legal Case Management System",rfps:"5–9",revenue:"$300K–$1.5M",vendors:[
+    {name:"Tyler Technologies Odyssey",type:"Common",status:"Not Started"},
+    {name:"Journal Technologies eCourt",type:"Niche",status:"Not Started"},
+    {name:"Thomson Reuters CS Pro",type:"Common",status:"Not Started"},
+    {name:"ImageSoft TrueSign",type:"Niche",status:"Not Started"},
+    {name:"CaseFox",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Library Management System (LMS/ILS)",rfps:"4–7",revenue:"$100K–$400K",vendors:[
+    {name:"SirsiDynix Symphony",type:"Common",status:"Not Started"},
+    {name:"Koha (ByWater Solutions)",type:"Niche",status:"Not Started"},
+    {name:"Ex Libris Alma (Clarivate)",type:"Common",status:"Not Started"},
+    {name:"Innovative Polaris",type:"Niche",status:"Not Started"},
+    {name:"Destiny (Follett)",type:"Common",status:"Not Started"}
+  ]},
+  {category:"Environmental Compliance & Monitoring Software",rfps:"4–8",revenue:"$200K–$800K",vendors:[
+    {name:"Cority",type:"Common",status:"Not Started"},
+    {name:"Intelex (ETQ Reliance)",type:"Common",status:"Not Started"},
+    {name:"Enablon (Wolters Kluwer)",type:"Common",status:"Not Started"},
+    {name:"Sphera",type:"Niche",status:"Not Started"},
+    {name:"Benchmark ESG",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Veterans Services & Benefits Management Software",rfps:"4–8",revenue:"$200K–$800K",vendors:[
+    {name:"VetPro (Cerner / Oracle Health)",type:"Common",status:"Not Started"},
+    {name:"VetLink (Pointsoflight)",type:"Niche",status:"Not Started"},
+    {name:"Salesforce Veterans Cloud",type:"Common",status:"Not Started"},
+    {name:"NovaBACKUP Veterans (NovaHit)",type:"Niche",status:"Not Started"},
+    {name:"Tyler Technologies Benefits Mgmt",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Energy Benchmarking & Sustainability Platform",rfps:"4–7",revenue:"$150K–$500K",vendors:[
+    {name:"ENERGY STAR Portfolio Manager (EPA)",type:"Common",status:"Not Started"},
+    {name:"Lucid BuildingOS",type:"Niche",status:"Not Started"},
+    {name:"Energywatch",type:"Niche",status:"Not Started"},
+    {name:"Measurabl",type:"Niche",status:"Not Started"},
+    {name:"GridPoint",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Archives & Records Management System",rfps:"6–12",revenue:"$100K–$500K",vendors:[
+    {name:"Laserfiche",type:"Common",status:"Not Started"},
+    {name:"Preservica",type:"Niche",status:"Not Started"},
+    {name:"ArchivesSpace",type:"Niche",status:"Not Started"},
+    {name:"Access Archivum",type:"Niche",status:"Not Started"},
+    {name:"OpenText Records Management",type:"Common",status:"Not Started"}
+  ]},
+  {category:"Integrated Eligibility & Benefits Determination System",rfps:"4–8",revenue:"$500K–$3M",vendors:[
+    {name:"Deloitte FAST (Medicaid/SNAP)",type:"Common",status:"Not Started"},
+    {name:"Accenture Eligibility Platform",type:"Common",status:"Not Started"},
+    {name:"Conduent Benefits Administration",type:"Common",status:"Not Started"},
+    {name:"Sagitec Neospin",type:"Niche",status:"Not Started"},
+    {name:"FAST Enterprises (eligibility)",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Parking & Mobility Management Software",rfps:"4–7",revenue:"$100K–$400K",vendors:[
+    {name:"T2 Systems",type:"Common",status:"Not Started"},
+    {name:"PASSPORT Parking",type:"Niche",status:"Not Started"},
+    {name:"ParkMobile (BMW)",type:"Common",status:"Not Started"},
+    {name:"Genetec AutoVu",type:"Niche",status:"Not Started"},
+    {name:"Conduent Transportation",type:"Common",status:"Not Started"}
+  ]},
+  {category:"Animal Control & Shelter Management Software",rfps:"3–6",revenue:"$50K–$200K",vendors:[
+    {name:"Chameleon (PetPoint)",type:"Niche",status:"Not Started"},
+    {name:"ShelterLuv",type:"Niche",status:"Not Started"},
+    {name:"Petpoint (Pethealth)",type:"Niche",status:"Not Started"},
+    {name:"Animal Shelter Manager (ASM)",type:"Niche",status:"Not Started"},
+    {name:"RescueGroups.org",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Cemetery & Burial Records Management",rfps:"2–4",revenue:"$50K–$150K",vendors:[
+    {name:"Cemetery Office Software (COS)",type:"Niche",status:"Not Started"},
+    {name:"TechniServ CemSites",type:"Niche",status:"Not Started"},
+    {name:"Crypt Keeper",type:"Niche",status:"Not Started"},
+    {name:"HMIS Cemetery (Tyler)",type:"Niche",status:"Not Started"},
+    {name:"FrontRunner Professional",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Youth & Juvenile Justice Case Management",rfps:"4–7",revenue:"$200K–$800K",vendors:[
+    {name:"Tyler New World Juvenile",type:"Common",status:"Not Started"},
+    {name:"FAMCare JJOLT",type:"Niche",status:"Not Started"},
+    {name:"Evident (Netsmart)",type:"Niche",status:"Not Started"},
+    {name:"JuvoHub",type:"Niche",status:"Not Started"},
+    {name:"Salesforce Nonprofit Cloud",type:"Common",status:"Not Started"}
+  ]},
+  {category:"Homelessness & Housing Assistance Platform (HMIS)",rfps:"5–9",revenue:"$200K–$700K",vendors:[
+    {name:"Clarity Human Services",type:"Niche",status:"Not Started"},
+    {name:"ServicePoint (Bitfocus)",type:"Common",status:"Not Started"},
+    {name:"Eccovia (CaseWorthy)",type:"Niche",status:"Not Started"},
+    {name:"Apricot by Bonterra",type:"Niche",status:"Not Started"},
+    {name:"WellSky",type:"Common",status:"Not Started"}
+  ]},
+  {category:"Tax Administration & Revenue Management Software",rfps:"4–8",revenue:"$500K–$3M",vendors:[
+    {name:"Fast Enterprises GenTax",type:"Common",status:"Not Started"},
+    {name:"Tyler Munis Tax",type:"Common",status:"Not Started"},
+    {name:"Avalara",type:"Common",status:"Not Started"},
+    {name:"SoftwareONE PTMS",type:"Niche",status:"Not Started"},
+    {name:"Harris ERP NorthStar",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Freedom of Information Act (FOIA) Management Software",rfps:"4–8",revenue:"$80K–$300K",vendors:[
+    {name:"Granicus GovQA",type:"Common",status:"Not Started"},
+    {name:"NextRequest",type:"Niche",status:"Not Started"},
+    {name:"Tyler Technologies FOIA",type:"Common",status:"Not Started"},
+    {name:"Folio (Docufree)",type:"Niche",status:"Not Started"},
+    {name:"JustFOIA",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Substance Use Disorder & Addiction Treatment Software",rfps:"4–7",revenue:"$150K–$600K",vendors:[
+    {name:"Netsmart myAvatar SUD",type:"Common",status:"Not Started"},
+    {name:"Qualifacts CareLogic",type:"Niche",status:"Not Started"},
+    {name:"Welligent",type:"Niche",status:"Not Started"},
+    {name:"BestNotes",type:"Niche",status:"Not Started"},
+    {name:"TheraNest",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Wildfire & Disaster Response Management Platform",rfps:"3–6",revenue:"$200K–$800K",vendors:[
+    {name:"ESRI ArcGIS Emergency Management",type:"Common",status:"Not Started"},
+    {name:"Veoci EOC",type:"Niche",status:"Not Started"},
+    {name:"WebEOC (Juvare)",type:"Common",status:"Not Started"},
+    {name:"Palantir Foundry Emergency",type:"Niche",status:"Not Started"},
+    {name:"NC4 E-Team",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Electronic Poll Book & Election Technology",rfps:"4–7",revenue:"$100K–$400K",vendors:[
+    {name:"KNOWiNK Poll Pad",type:"Common",status:"Not Started"},
+    {name:"Tenex ePollBook",type:"Niche",status:"Not Started"},
+    {name:"ES&S (Election Systems & Software)",type:"Common",status:"Not Started"},
+    {name:"Dominion Voting Systems",type:"Common",status:"Not Started"},
+    {name:"Hart InterCivic",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Workforce Development & Training Management System",rfps:"5–9",revenue:"$150K–$500K",vendors:[
+    {name:"Geographic Solutions (GESI)",type:"Common",status:"Not Started"},
+    {name:"Workforce GPS (DOL platform)",type:"Niche",status:"Not Started"},
+    {name:"America's Job Exchange",type:"Niche",status:"Not Started"},
+    {name:"Apricot (Bonterra) WFD",type:"Niche",status:"Not Started"},
+    {name:"Cornerstone Government Training",type:"Common",status:"Not Started"}
+  ]},
+  {category:"Immigration & Study Abroad Case Management",rfps:"3–6",revenue:"$100K–$400K",vendors:[
+    {name:"Terra Dotta",type:"Common",status:"Not Started"},
+    {name:"International Student Exchange (ISE)",type:"Niche",status:"Not Started"},
+    {name:"ImmigrationTracker",type:"Niche",status:"Not Started"},
+    {name:"Sunapsis (Terra Dotta ISSS)",type:"Niche",status:"Not Started"},
+    {name:"iStar (Powernet)",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Early Childhood & Childcare Management Software",rfps:"4–7",revenue:"$100K–$400K",vendors:[
+    {name:"ChildPlus",type:"Common",status:"Not Started"},
+    {name:"Procare Solutions",type:"Common",status:"Not Started"},
+    {name:"Brightwheel",type:"Common",status:"Not Started"},
+    {name:"EZChildTrack",type:"Niche",status:"Not Started"},
+    {name:"KidKare (Minute Menu)",type:"Niche",status:"Not Started"}
+  ]},
+  {category:"Code Enforcement & Municipal Violations Platform",rfps:"4–8",revenue:"$100K–$400K",vendors:[
+    {name:"Tyler Technologies (Code Enforcement)",type:"Common",status:"Not Started"},
+    {name:"Accela",type:"Common",status:"Not Started"},
+    {name:"MyGovHub",type:"Niche",status:"Not Started"},
+    {name:"ViewPoint (Trimble)",type:"Niche",status:"Not Started"},
+    {name:"CivicPlus CivicEngage",type:"Niche",status:"Not Started"}
+  ]}
+];
+
+
+// ══════════════════════════════════════════════
+// STAGE MAP
+// ══════════════════════════════════════════════
+const STAGE_LABEL = {"1":"Applied","2":"In Process","3":"Completed","4":"Rejected"};
+const STAGE_BADGE = {"1":"form-filled","2":"pursuing","3":"approved","4":"denied"};
+const HS_BASE_URL = "https://app.hubspot.com/contacts/243046792/record/0-5/";
+
+// ══════════════════════════════════════════════
+// DERIVED HELPERS
+// ══════════════════════════════════════════════
+function stageLabel(s){ return STAGE_LABEL[s]||s; }
+function stageBadge(s){ return STAGE_BADGE[s]||'not-started'; }
+function badge(text, cls){ return `<span class="badge ${cls||'not-started'}">${text}</span>`; }
+function stagePill(s){ return badge(stageLabel(s), stageBadge(s)); }
+function hsLink(id){ return `${HS_BASE_URL}${id}`; }
+
+// ══════════════════════════════════════════════
+// COUNTS
+// ══════════════════════════════════════════════
+function counts(){
+  return {
+    comp: HS_PARTNERS.filter(p=>p.stage==="3").length,
+    proc: HS_PARTNERS.filter(p=>p.stage==="2").length,
+    appl: HS_PARTNERS.filter(p=>p.stage==="1").length,
+    rej:  HS_PARTNERS.filter(p=>p.stage==="4").length,
+    tot:  HS_PARTNERS.length
+  };
+}
+
+// ══════════════════════════════════════════════
+// TOPBAR + KPIs
+// ══════════════════════════════════════════════
+function updateTopbar(){
+  const c = counts();
+  const el = id => document.getElementById(id);
+  if(el('tb-comp'))  el('tb-comp').textContent  = c.comp;
+  if(el('tb-proc'))  el('tb-proc').textContent  = c.proc;
+  if(el('tb-appl'))  el('tb-appl').textContent  = c.appl;
+  if(el('tb-rej'))   el('tb-rej').textContent   = c.rej;
+  if(el('nb-total')) el('nb-total').textContent = c.tot;
+  if(el('hs-total')) el('hs-total').textContent = c.tot;
+  const ts = el('ts');
+  if(ts) ts.textContent = 'Updated ' + new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  const tsl = el('ts-label');
+  if(tsl) tsl.textContent = 'Live from HubSpot · ' + new Date().getFullYear();
+  if(el('nb-niche')) el('nb-niche').textContent = NICHE_DEFAULT.length;
+}
+
+function updateKPIs(){
+  const c = counts();
+  const el = id => document.getElementById(id);
+  if(el('k-comp')) el('k-comp').textContent = c.comp;
+  if(el('k-proc')) el('k-proc').textContent = c.proc;
+  if(el('k-appl')) el('k-appl').textContent = c.appl;
+  if(el('k-rej'))  el('k-rej').textContent  = c.rej;
+  // Health score
+  const score = Math.min(100, Math.max(0, Math.round((c.comp/c.tot)*70 - (c.rej/c.tot)*20 + 20)));
+  if(el('h-num')) el('h-num').textContent = score;
+}
+
+// ══════════════════════════════════════════════
+// CHARTS
+// ══════════════════════════════════════════════
+let charts = {};
+function renderCharts(){
+  const c = counts();
+  if(charts.donut){ charts.donut.destroy(); charts.donut=null; }
+  if(charts.bar){   charts.bar.destroy();   charts.bar=null; }
+  if(charts.hbar){  charts.hbar.destroy();  charts.hbar=null; }
+
+  const dColors = ['#057A50','#C96A00','#4472C4','#B91C1C'];
+  const dLabels = ['Completed','In Process','Applied','Rejected'];
+  const dData   = [c.comp, c.proc, c.appl, c.rej];
+
+  const lgEl = document.getElementById('lg-donut');
+  if(lgEl) lgEl.innerHTML = dLabels.map((l,i)=>
+    `<span class="legend-i"><span class="legend-dot" style="background:${dColors[i]}"></span>${l} <strong>${dData[i]}</strong></span>`
+  ).join('');
+
+  const donutEl = document.getElementById('c-donut');
+  if(donutEl) charts.donut = new Chart(donutEl,{
+    type:'doughnut',
+    data:{labels:dLabels,datasets:[{data:dData,backgroundColor:dColors,borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false}}}
+  });
+
+  const allCats = [...new Set(HS_PARTNERS.map(p=>p.cat))].sort();
+  const shortCats = allCats.map(c=>c.length>14?c.substring(0,13)+'…':c);
+  const barEl = document.getElementById('c-bar');
+  if(barEl) charts.bar = new Chart(barEl,{
+    type:'bar',
+    data:{labels:shortCats, datasets:[
+      {label:'Completed', data:allCats.map(cat=>HS_PARTNERS.filter(p=>p.cat===cat&&p.stage==="3").length), backgroundColor:'#057A50',borderRadius:3,stack:'s'},
+      {label:'In Process',data:allCats.map(cat=>HS_PARTNERS.filter(p=>p.cat===cat&&p.stage==="2").length), backgroundColor:'#C96A00',borderRadius:3,stack:'s'},
+      {label:'Applied',   data:allCats.map(cat=>HS_PARTNERS.filter(p=>p.cat===cat&&p.stage==="1").length), backgroundColor:'#4472C4',borderRadius:3,stack:'s'},
+      {label:'Rejected',  data:allCats.map(cat=>HS_PARTNERS.filter(p=>p.cat===cat&&p.stage==="4").length), backgroundColor:'#B91C1C',borderRadius:3,stack:'s'},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:9},padding:6,boxWidth:9}}},
+      scales:{y:{beginAtZero:true,stacked:true,ticks:{stepSize:2,font:{size:9}},grid:{color:'#EEF3FB'}},
+              x:{stacked:true,ticks:{font:{size:8},maxRotation:50},grid:{display:false}}}}
+  });
+
+  const gaps = [
+    {l:'CrowdStrike (EDR)',v:22},{l:'Workday/ADP (HCM)',v:18},{l:'Laserfiche (ECM)',v:16},
+    {l:'Ellucian (Higher Ed)',v:14},{l:'ArcGIS (GIS)',v:14},{l:'UKG (Workforce)',v:12},
+    {l:'DocuSign (eSign)',v:10},{l:'Okta (IAM)',v:10},{l:'Azure (Cloud CSP)',v:8},{l:'Rapid7 (VulnMgmt)',v:8}
+  ];
+  const hbarEl = document.getElementById('c-hbar');
+  if(hbarEl) charts.hbar = new Chart(hbarEl,{
+    type:'bar',
+    data:{labels:gaps.map(g=>g.l),datasets:[{label:'Missed RFPs',data:gaps.map(g=>g.v),backgroundColor:gaps.map((_,i)=>i<5?'#B91C1C':'#C96A00'),borderRadius:3}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{beginAtZero:true,ticks:{font:{size:9}},grid:{color:'#EEF3FB'}},
+              y:{ticks:{font:{size:10}},grid:{display:false}}}}
+  });
+}
+
+// ══════════════════════════════════════════════
+// PARTNERSHIP DIRECTORY (Browse by Stage)
+// ══════════════════════════════════════════════
+function renderBrowse(){
+  const q     = (document.getElementById('browse-q')?.value||'').toLowerCase();
+  const stage = document.getElementById('browse-stage')?.value||'';
+  const cat   = document.getElementById('browse-cat')?.value||'';
+
+  // Populate category filter
+  const catSel = document.getElementById('browse-cat');
+  if(catSel && catSel.options.length <= 1){
+    const cats = [...new Set(HS_PARTNERS.map(p=>p.cat))].sort();
+    cats.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; catSel.appendChild(o); });
+  }
+
+  let d = HS_PARTNERS.filter(p=>
+    (!stage || p.stage===stage) &&
+    (!cat   || p.cat===cat) &&
+    (!q     || p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q) ||
+               (p.desc||'').toLowerCase().includes(q) ||
+               (p.solutions||[]).some(s=>s.toLowerCase().includes(q)))
+  );
+
+  const cntEl = document.getElementById('browse-cnt');
+  if(cntEl) cntEl.textContent = d.length;
+
+  const grid = document.getElementById('browse-grid');
+  if(!grid) return;
+
+  if(!d.length){
+    grid.innerHTML = '<div class="empty"><p>No partners match your search.</p></div>';
+    return;
+  }
+
+  grid.innerHTML = d.map(p => {
+    const stageColors = {"1":"#4472C4","2":"#C96A00","3":"#057A50","4":"#B91C1C"};
+    const borderColor = stageColors[p.stage]||'#DDE4F0';
+    const solutions = (p.solutions||[]).slice(0,4);
+    const moreCount = (p.solutions||[]).length - 4;
+    return `<div class="partner-card" style="border-left:3px solid ${borderColor}">
+      <div class="pc-top">
+        <div class="pc-name">${p.name}</div>
+        ${stagePill(p.stage)}
+      </div>
+      <div class="pc-cat">${p.cat}</div>
+      <div class="pc-desc">${(p.desc||'').substring(0,120)}${(p.desc||'').length>120?'…':''}</div>
+      <div class="pc-solutions">
+        ${solutions.map(s=>`<span class="pc-sol">${s}</span>`).join('')}
+        ${moreCount>0?`<span class="pc-sol">+${moreCount} more</span>`:''}
+      </div>
+      <div class="pc-footer">
+        <span style="font-size:10.5px;color:var(--txt3)">${p.cat}</span>
+        <a href="${hsLink(p.id)}" target="_blank" class="hs-link-btn" onclick="event.stopPropagation()">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          HubSpot
+        </a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// SOLUTIONS LIBRARY — BUILD FROM PARTNER DATA
+// ══════════════════════════════════════════════
+function buildSolutionsData(){ return SOLUTION_TAXONOMY; }
+
+let SOL_DATA = [];
+let expandedSol = null;
+
+function renderSolFilters(){
+  const cats = [...new Set(SOLUTION_TAXONOMY.map(s=>s.category))].sort();
+  const bar = document.getElementById('sol-cat-filters');
+  if(!bar) return;
+  bar.innerHTML = `<button class="filter-chip active" onclick="setSolCat(this,'')">All Categories</button>` +
+    cats.map(c=>`<button class="filter-chip" onclick="setSolCat(this,'${c.replace(/'/g,"\'")}')">${c}</button>`).join('');
+}
+
+function setSolCat(btn, cat){
+  document.querySelectorAll('#sol-cat-filters .filter-chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSol();
+}
+function getActiveCat(){
+  const a = document.querySelector('#sol-cat-filters .filter-chip.active');
+  return a ? a.getAttribute('onclick')?.match(/setSolCat\(this,'([^']*)'\)/)?.[1]||'' : '';
+}
+
+function renderSol(){
+  const rawQ = (document.getElementById('sol-q')?.value||'');
+  const q = rawQ.toLowerCase();
+  const stageF = document.getElementById('sol-pstat')?.value||'';
+  const cat = getActiveCat();
+
+  let filtered = SOLUTION_TAXONOMY.filter(s => {
+    const catMatch  = !cat || s.category === cat;
+    const stMatch   = !stageF || s.partners.some(p=>p.stage===stageF);
+    if(!catMatch || !stMatch) return false;
+    if(!q) return true;
+    // Semantic search: match solution name, keywords, partner names, product names
+    const inSolution = s.solution.toLowerCase().includes(q);
+    const inKeywords = (s.keywords||[]).some(k=>k.toLowerCase().includes(q)||q.includes(k.toLowerCase()));
+    const inPartners = s.partners.some(p=>
+      p.name.toLowerCase().includes(q) ||
+      p.product.toLowerCase().includes(q)
+    );
+    // Also match individual words from query
+    const queryWords = q.split(/\s+/).filter(w=>w.length>2);
+    const wordMatch = queryWords.length > 1 && queryWords.every(w=>
+      s.solution.toLowerCase().includes(w) ||
+      (s.keywords||[]).some(k=>k.toLowerCase().includes(w)) ||
+      s.partners.some(p=>p.name.toLowerCase().includes(w)||p.product.toLowerCase().includes(w))
+    );
+    return inSolution || inKeywords || inPartners || wordMatch;
+  });
+
+  if(stageF){
+    filtered = filtered.map(s=>({...s, partners:s.partners.filter(p=>p.stage===stageF)})).filter(s=>s.partners.length>0);
+  }
+
+  const cntEl = document.getElementById('sol-count');
+  if(cntEl) cntEl.textContent = filtered.length;
+
+  const grid = document.getElementById('sol-grid');
+  if(!grid) return;
+
+  if(!filtered.length){
+    grid.innerHTML = `<div class="sol-no-results"><div style="font-size:2rem;margin-bottom:8px">🔍</div><div style="font-weight:600;color:var(--txt2);margin-bottom:4px">No solutions found for "${rawQ}"</div><div>Try keywords like: "endpoint security", "cloud backup", "itsm", "erp", "payroll", "gis", "siem"</div></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((s,idx) => {
+    const isExp = expandedSol === s.solution;
+    const preview = s.partners.slice(0,3);
+    const moreCount = s.partners.length - 3;
+
+    const previewRows = preview.map(p=>`
+      <div class="sol-partner-row">
+        <div>
+          <div class="sol-partner-name">${p.name}</div>
+          <div class="sol-partner-product">${p.product}</div>
+        </div>
+        ${stagePill(p.stage)}
+      </div>`).join('');
+
+    const allRows = s.partners.map(p=>`
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:2px">${p.name}</div>
+          <div style="font-size:12px;color:var(--txt2);margin-bottom:3px">${p.product}</div>
+          <div style="font-size:10.5px;color:var(--txt3)">${p.cat||''}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0">
+          ${stagePill(p.stage)}
+          <a href="${HS_BASE_URL}${p.id}" target="_blank" class="sol-hs-link">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View in HubSpot
+          </a>
+        </div>
+      </div>`).join('');
+
+    return `<div class="sol-card ${isExp?'expanded':''}" id="solcard-${idx}" onclick="toggleSolByIdx(${idx})">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px">
+        <div class="sol-card-name">${s.solution}</div>
+        <span style="font-size:9.5px;font-weight:700;background:var(--blue-pale);color:var(--navy3);border:1px solid var(--blue-mid);border-radius:10px;padding:2px 8px;flex-shrink:0">${s.partners.length} partner${s.partners.length>1?'s':''}</span>
+      </div>
+      <div class="sol-card-cat">${s.category}</div>
+      ${previewRows}
+      ${!isExp && moreCount>0?`<div style="font-size:11px;color:var(--navy4);margin-top:7px;font-weight:500">+ ${moreCount} more — click to see all</div>`:''}
+      <div class="sol-expand-body">
+        <div style="font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:8px">All ${s.partners.length} Partner${s.partners.length>1?'s':''} for This Solution</div>
+        ${allRows}
+        <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);font-size:11px;color:var(--txt3)">
+          Search keywords: ${(s.keywords||[]).slice(0,6).join(', ')}
+        </div>
+      </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:11px;color:var(--txt3)">${isExp?'Click to collapse':'Click to expand full details + HubSpot links'}</span>
+        <span style="font-size:12px;color:var(--navy4);font-weight:600">${isExp?'▲':'▼'}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleSolByIdx(idx){
+  const el = document.getElementById('sec-solutions');
+  const cards = el ? el.querySelectorAll('.sol-card') : [];
+  const card = cards[idx];
+  if(!card) return;
+  const nameEl = card.querySelector('.sol-card-name');
+  if(nameEl) toggleSol(idx, nameEl.textContent.trim());
+}
+
+function toggleSol(idx, solution){
+  expandedSol = expandedSol === solution ? null : solution;
+  renderSol();
+  if(expandedSol){
+    const card = document.getElementById('solcard-'+idx);
+    if(card) setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+  }
+}
+
+// ══════════════════════════════════════════════
+// RFP GAP ANALYSIS
+// ══════════════════════════════════════════════
+const RFP_DATA = [
+  {category:"CrowdStrike / EDR-XDR Security",partner:"CrowdStrike (In Process)",missed:22,revenue:3960000,priority:"Critical",action:"Authorize $2,500 MSSP investment — leadership decision"},
+  {category:"Workday / ADP HCM & HRIS",partner:"Workday (Rejected), ADP (In Process)",missed:18,revenue:5760000,priority:"Critical",action:"Re-engage Workday with stronger profile; expedite ADP"},
+  {category:"Laserfiche ECM",partner:"Laserfiche (In Process)",missed:16,revenue:2400000,priority:"Critical",action:"Authorize $10,000 Year 1 commitment — leadership decision"},
+  {category:"Ellucian Higher Ed ERP",partner:"Ellucian (Rejected)",missed:14,revenue:6300000,priority:"High",action:"Pursue teaming arrangement; monitor for re-opening"},
+  {category:"ArcGIS / Esri GIS Platform",partner:"ArcGIS (Applied)",missed:14,revenue:2660000,priority:"High",action:"Expedite Esri application — follow up with partner team"},
+  {category:"UKG / Kronos Workforce",partner:"UKG (Rejected)",missed:12,revenue:3360000,priority:"High",action:"Teaming strategy with existing UKG partners"},
+  {category:"DocuSign E-Signature",partner:"Not Started",missed:10,revenue:2200000,priority:"High",action:"Apply immediately — government program is free"},
+  {category:"Okta / OneLogin IAM",partner:"Not Started",missed:10,revenue:2200000,priority:"Critical",action:"Apply immediately — Zero Trust mandate, free to apply"},
+  {category:"Microsoft Azure CSP",partner:"Completed (via cloud partner)",missed:8,revenue:4000000,priority:"High",action:"Formalize direct CSP registration — 1-2 day process"},
+  {category:"Rapid7 Vulnerability Mgmt",partner:"Not Started",missed:8,revenue:1280000,priority:"High",action:"Apply immediately — free partner program"},
+  {category:"Informatica MDM/Integration",partner:"Applied",missed:6,revenue:1800000,priority:"High",action:"Expedite Informatica application"},
+  {category:"Varonis Data Security",partner:"Applied",missed:5,revenue:1500000,priority:"Medium",action:"Follow up on application status"},
+];
+
+let rfpSort = {col:'missed',dir:'desc'};
+function renderRFP(){
+  const pf = document.getElementById('rfp-pf')?.value||'';
+  let d = RFP_DATA.filter(r=>!pf||r.priority===pf);
+  d = [...d].sort((a,b)=>{
+    const va=a[rfpSort.col], vb=b[rfpSort.col];
+    return typeof va==='number'?(rfpSort.dir==='asc'?va-vb:vb-va):(rfpSort.dir==='asc'?String(va).localeCompare(String(vb)):String(vb).localeCompare(String(va)));
+  });
+  const tb = document.getElementById('rfp-tbody');
+  if(!tb) return;
+  tb.innerHTML = d.map(r=>`<tr>
+    <td><strong>${r.category}</strong></td>
+    <td style="font-size:11.5px;color:var(--txt2)">${r.partner}</td>
+    <td style="font-size:15px;font-weight:800;color:var(--navy)">${r.missed}</td>
+    <td style="font-size:13px;font-weight:700;color:var(--red)">$${(r.revenue/1000000).toFixed(2)}M</td>
+    <td>${badge(r.priority, r.priority==='Critical'?'critical':r.priority==='High'?'high':'medium')}</td>
+    <td style="font-size:11.5px;color:var(--txt2)">${r.action}</td>
+  </tr>`).join('');
+  const tr = d.reduce((s,r)=>s+r.missed,0);
+  const tv = d.reduce((s,r)=>s+r.revenue,0);
+  const totR = document.getElementById('rfp-tot-r');
+  const totV = document.getElementById('rfp-tot-v');
+  if(totR) totR.textContent = tr+'+';
+  if(totV) totV.textContent = '$'+(tv/1000000).toFixed(1)+'M+';
+}
+function sRFP(col){
+  rfpSort.dir = rfpSort.col===col&&rfpSort.dir==='asc'?'desc':'asc';
+  rfpSort.col = col;
+  renderRFP();
+}
+
+// ══════════════════════════════════════════════
+// EMERGING RFP CATEGORIES
+// ══════════════════════════════════════════════
+function renderNiche(){
+  const q = (document.getElementById('niche-q')?.value||'').toLowerCase();
+  const data = NICHE_DEFAULT.filter(n=>
+    !q || n.category.toLowerCase().includes(q) ||
+    n.vendors.some(v=>v.name.toLowerCase().includes(q))
+  );
+  const cntEl = document.getElementById('niche-count');
+  if(cntEl) cntEl.textContent = data.length;
+  const grid = document.getElementById('niche-grid');
+  if(!grid) return;
+  grid.innerHTML = data.map(cat=>`
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px">
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px">${cat.category}</div>
+      <div style="font-size:11px;color:var(--txt3);margin-bottom:10px">Est. Missed RFPs: <strong>${cat.rfps}</strong> &nbsp;·&nbsp; Contract Range: <strong>${cat.revenue}</strong></div>
+      ${cat.vendors.map(v=>{
+        const cls = v.status==='Approved'?'approved':v.status==='Pursuing'?'pursuing':'not-started';
+        return `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid var(--border2)">
+          <div style="font-size:12px;font-weight:500;color:var(--txt)">${v.name}</div>
+          <div style="display:flex;gap:5px;align-items:center;flex-shrink:0">
+            <span class="badge ${v.type==='Common'?'approved':'pursuing'}" style="font-size:9px">${v.type}</span>
+            <span class="badge ${cls}" style="font-size:9px">${v.status||'Not Started'}</span>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+const pgLabels = {
+  overview:'Executive Overview', browse:'Partnership Directory',
+  solutions:'Solution Center', rfp:'Partnership Gap & Revenue Impact',
+  niche:'Emerging RFP Categories'
+};
+function nav(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  const sec = document.getElementById('sec-'+id);
+  if(sec) sec.classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(n=>{
+    n.classList.remove('active');
+    if(n.getAttribute('onclick')?.includes("'"+id+"'")) n.classList.add('active');
+  });
+  const lbl = document.getElementById('pg-label');
+  if(lbl) lbl.textContent = pgLabels[id]||id;
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+function init(){
+  SOL_DATA = buildSolutionsData();
+  updateTopbar();
+  updateKPIs();
+  // Show data freshness badge
+  try {
+    const badge = document.getElementById('freshness-badge');
+    if(badge && typeof CAPS_DATA_SNAPSHOT_TS !== 'undefined') {
+      const d = new Date(CAPS_DATA_SNAPSHOT_TS);
+      const fmt = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      badge.style.display = 'inline-flex';
+      badge.title = 'Data snapshot: ' + fmt + ' · Last HubSpot change: ' + (typeof CAPS_HS_LAST_MODIFIED !== 'undefined' ? new Date(CAPS_HS_LAST_MODIFIED).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : 'unknown') + '\nTo refresh: ask Claude to pull latest HubSpot data';
+      const sd = document.getElementById('snapshot-date');
+      const hd = document.getElementById('hs-change-date');
+      if(sd) sd.textContent = fmt;
+      if(hd && typeof CAPS_HS_LAST_MODIFIED !== 'undefined') hd.textContent = new Date(CAPS_HS_LAST_MODIFIED).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    }
+  } catch(e) {}
+  renderCharts();
+  renderBrowse();
+  renderSolFilters();
+  renderSol();
+  renderRFP();
+  renderNiche();
+}
+
+init();
+
+</script>
+</body>
+</html>
