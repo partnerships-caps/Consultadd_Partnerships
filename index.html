@@ -399,35 +399,128 @@ tr:hover td{background:var(--blue-pale)}
 // Source: HubSpot OEM Partnership Pipeline (Pipeline ID: 0)
 // Stages: 1=Applied, 2=In Process, 3=Completed, 4=Rejected
 //
-// SNAPSHOT TIMESTAMP  : 2026-06-12T03:25:11Z
-// LAST HUBSPOT CHANGE : 2026-06-12T03:20:20.662Z
-// TOTAL RECORDS       : 96
-//   Completed  (3)    : 41
-//   In Process (2)    : 14
-//   Applied    (1)    : 34
+// SNAPSHOT TIMESTAMP  : 2026-08-27T12:34:41Z
+// LAST HUBSPOT CHANGE : 2026-08-25T18:19:14.544Z
+// TOTAL RECORDS       : 103
+//   Completed  (3)    : 44
+//   In Process (2)    : 16
+//   Applied    (1)    : 36
 //   Rejected   (4)    : 7
 //
-// DELTA vs BASELINE (May 20, 2026):
-//   16 new partners added
-//   0  stage changes
-//
-// HOW TO REFRESH:
-//   In Claude, type: "Refresh the partnership dashboard"
-//   Claude pulls changes since 2026-06-12T03:20:20.662Z
-//   Replace ONLY this file on GitHub — index.html stays unchanged.
+// DELTA vs Jun 12 2026 baseline (96 partners):
+//   7 new partners: SOPHOS, Barracuda, HPE, Asset Panda, Lightcast, AbsenseSoft, Jotform
+//   2 stage changes: ArcGIS (Applied->In Process), Industrial Defender (Completed->In Process)
 // ═══════════════════════════════════════════════════════════════
 
-const CAPS_DATA_SNAPSHOT_TS  = "2026-06-12T03:25:11Z";
-const CAPS_HS_LAST_MODIFIED  = "2026-06-12T03:20:20.662Z";
-const CAPS_TOTAL_RECORDS     = 96;
+const CAPS_DATA_SNAPSHOT_TS  = "2026-08-27T12:34:41Z";
+const CAPS_HS_LAST_MODIFIED  = "2026-08-25T18:19:14.544Z";
+const CAPS_TOTAL_RECORDS     = 103;
 
 const HS_PARTNERS = [
+  {
+    "id": "330239284974",
+    "name": "SOPHOS",
+    "stage": "3",
+    "cat": "Cybersecurity",
+    "desc": "Sophos provides cybersecurity solutions including endpoint protection, firewall, email security, and managed detection and response (MDR) for enterprise and government environments.",
+    "solutions": [
+      "Endpoint Detection & Response (EDR)",
+      "Next-Generation Firewall (NGFW)",
+      "Email Security",
+      "Managed Detection & Response (MDR)",
+      "Zero Trust Network Access (ZTNA)"
+    ]
+  },
+  {
+    "id": "327891003074",
+    "name": "Barracuda",
+    "stage": "1",
+    "cat": "Cybersecurity",
+    "desc": "Barracuda provides cloud-first security solutions including email protection, network security, application security, and data protection for businesses and government organizations.",
+    "solutions": [
+      "Email Security & Anti-Phishing",
+      "Web Application Firewall",
+      "Zero Trust Access",
+      "Cloud Backup",
+      "Network Security"
+    ]
+  },
+  {
+    "id": "320405145287",
+    "name": "Hewlett Packard Enterprise (HPE)",
+    "stage": "3",
+    "cat": "Cloud & Infrastructure",
+    "desc": "HPE provides enterprise IT infrastructure including servers, storage, networking, and hybrid cloud solutions. Its GreenLake platform delivers cloud services on-premises with flexible consumption models widely adopted in government and enterprise environments.",
+    "solutions": [
+      "HPE GreenLake (Hybrid Cloud)",
+      "Server Infrastructure",
+      "Storage Solutions",
+      "Networking",
+      "High-Performance Computing (HPC)"
+    ]
+  },
+  {
+    "id": "321087850229",
+    "name": "Asset Panda",
+    "stage": "3",
+    "cat": "ITSM & Asset Management",
+    "desc": "Asset Panda is a cloud-based asset tracking and management platform that enables organizations to track, manage, and audit physical and IT assets through a customizable, mobile-friendly interface.",
+    "solutions": [
+      "Asset Tracking",
+      "IT Asset Management",
+      "Fixed Asset Management",
+      "Audit & Compliance",
+      "Mobile Asset Management"
+    ]
+  },
+  {
+    "id": "320048741107",
+    "name": "Lightcast",
+    "stage": "1",
+    "cat": "Data & Analytics",
+    "desc": "Lightcast (formerly Emsi Burning Glass) provides labor market data, workforce analytics, and economic impact insights used by government agencies, universities, and workforce development organizations to understand employment trends and skill gaps.",
+    "solutions": [
+      "Labor Market Analytics",
+      "Workforce Intelligence",
+      "Economic Impact Analysis",
+      "Skills Gap Analysis",
+      "Education & Workforce Data"
+    ]
+  },
+  {
+    "id": "320109551296",
+    "name": "AbsenseSoft",
+    "stage": "1",
+    "cat": "HCM & HR",
+    "desc": "AbsenseSoft provides leave management and absence tracking software that helps organizations manage employee leave requests, track absences, and ensure compliance with leave policies and regulations.",
+    "solutions": [
+      "Leave Management System",
+      "Absence Tracking",
+      "FMLA Compliance",
+      "Employee Self-Service",
+      "HR Workflow Automation"
+    ]
+  },
+  {
+    "id": "317717603034",
+    "name": "Jotform",
+    "stage": "3",
+    "cat": "Digital Government",
+    "desc": "Jotform is a cloud-based form builder and data collection platform enabling organizations to create online forms, surveys, and workflows without coding. It is used by government agencies for citizen intake, applications, and internal approvals.",
+    "solutions": [
+      "Online Forms & Surveys",
+      "Citizen Intake Forms",
+      "Workflow Automation",
+      "E-Signatures",
+      "Data Collection & Reporting"
+    ]
+  },
   {
     "id": "314691661523",
     "name": "Smart Communications",
     "stage": "1",
     "cat": "Digital Government",
-    "desc": "Smart Communications provides a cloud-based customer communications management (CCM) platform enabling government agencies to manage complex, high-volume outbound communications \u2014 including notices, letters, and forms \u2014 across digital and print channels.",
+    "desc": "Smart Communications provides a cloud-based customer communications management (CCM) platform enabling government agencies to manage complex, high-volume outbound communications across digital and print channels.",
     "solutions": [
       "Customer Communications Management (CCM)",
       "Government Notices & Letters",
@@ -441,7 +534,7 @@ const HS_PARTNERS = [
     "name": "Netskope",
     "stage": "1",
     "cat": "Cybersecurity",
-    "desc": "Netskope provides a Security Service Edge (SSE) and SASE platform protecting data and users accessing cloud applications, the web, and private applications. It specializes in cloud-native DLP, CASB, and Zero Trust Network Access from a single platform.",
+    "desc": "Netskope provides a Security Service Edge (SSE) and SASE platform protecting data and users accessing cloud applications, the web, and private applications. It specializes in cloud-native DLP, CASB, and Zero Trust Network Access.",
     "solutions": [
       "Zero Trust Network Access (ZTNA)",
       "SASE Platform",
@@ -455,7 +548,7 @@ const HS_PARTNERS = [
     "name": "Infor",
     "stage": "1",
     "cat": "ERP & Enterprise Apps",
-    "desc": "Infor provides industry-specific cloud ERP solutions for government, healthcare, and public services. Its CloudSuite Public Sector and Lawson platforms are used by state and local governments, school districts, and healthcare systems for finance, HR, supply chain, and asset management.",
+    "desc": "Infor provides industry-specific cloud ERP solutions for government, healthcare, and public services. Its CloudSuite Public Sector and Lawson platforms are used by state and local governments for finance, HR, supply chain, and asset management.",
     "solutions": [
       "Cloud ERP (Public Sector)",
       "Lawson Financial Management",
@@ -469,7 +562,7 @@ const HS_PARTNERS = [
     "name": "CyberArk",
     "stage": "1",
     "cat": "Cybersecurity",
-    "desc": "CyberArk is the industry leader in Privileged Access Management, helping organizations secure and monitor privileged accounts, credentials, and access across on-premise and cloud environments. It is FedRAMP authorized and a core component of Zero Trust security architectures.",
+    "desc": "CyberArk is the industry leader in Privileged Access Management, helping organizations secure and monitor privileged accounts, credentials, and access across on-premise and cloud environments. FedRAMP authorized and a core Zero Trust component.",
     "solutions": [
       "Privileged Access Management (PAM)",
       "Secrets Management",
@@ -483,7 +576,7 @@ const HS_PARTNERS = [
     "name": "Netsmart Technologies",
     "stage": "1",
     "cat": "Healthcare IT",
-    "desc": "Netsmart provides electronic health records (EHR), care coordination, and analytics platforms specifically built for behavioral health, addiction treatment, and human services organizations. Its myAvatar and CareFabric platforms are used by state agencies and community health organizations.",
+    "desc": "Netsmart provides electronic health records (EHR), care coordination, and analytics platforms specifically built for behavioral health, addiction treatment, and human services organizations.",
     "solutions": [
       "Behavioral Health EHR",
       "Care Coordination Platform",
@@ -497,7 +590,7 @@ const HS_PARTNERS = [
     "name": "Okta",
     "stage": "1",
     "cat": "Cybersecurity",
-    "desc": "Okta is a leading cloud-based identity and access management (IAM) platform providing Single Sign-On (SSO), Multi-Factor Authentication (MFA), and identity governance for enterprise and government environments. It is FedRAMP authorized and widely specified in government Zero Trust RFPs.",
+    "desc": "Okta is a leading cloud-based identity and access management (IAM) platform providing Single Sign-On (SSO), Multi-Factor Authentication (MFA), and identity governance. FedRAMP authorized and widely specified in government Zero Trust RFPs.",
     "solutions": [
       "Single Sign-On (SSO)",
       "Multi-Factor Authentication (MFA)",
@@ -511,7 +604,7 @@ const HS_PARTNERS = [
     "name": "DocuSign",
     "stage": "1",
     "cat": "Digital Government",
-    "desc": "DocuSign is the global standard for electronic signatures and digital agreement management. It holds FedRAMP authorization and is used extensively across federal, state, and local agencies for contracts, procurement approvals, HR documentation, and citizen-facing forms.",
+    "desc": "DocuSign is the global standard for electronic signatures and digital agreement management. FedRAMP authorized and used extensively across federal, state, and local agencies for contracts, procurement approvals, and citizen-facing forms.",
     "solutions": [
       "Electronic Signatures (e-Sign)",
       "Digital Agreement Management",
@@ -525,7 +618,7 @@ const HS_PARTNERS = [
     "name": "Rapid7",
     "stage": "1",
     "cat": "Cybersecurity",
-    "desc": "Rapid7 provides cloud-based vulnerability management, threat detection, and incident response solutions. Its InsightVM platform is one of the most widely deployed vulnerability scanners in enterprise and government environments, supporting NIST and FISMA compliance reporting.",
+    "desc": "Rapid7 provides cloud-based vulnerability management, threat detection, and incident response solutions. Its InsightVM platform is one of the most widely deployed vulnerability scanners in enterprise and government environments.",
     "solutions": [
       "Vulnerability Management",
       "InsightVM Scanner",
@@ -539,7 +632,7 @@ const HS_PARTNERS = [
     "name": "Deltek",
     "stage": "1",
     "cat": "ERP & Enterprise Apps",
-    "desc": "Deltek provides ERP and project management software built specifically for government contractors. Its Costpoint and Vantagepoint platforms handle project accounting, billing, compliance, contract management, and workforce administration for firms operating in the federal contracting space.",
+    "desc": "Deltek provides ERP and project management software built specifically for government contractors. Its Costpoint and Vantagepoint platforms handle project accounting, billing, compliance, and contract management.",
     "solutions": [
       "Government Contractor ERP (Costpoint)",
       "Project Accounting",
@@ -553,7 +646,7 @@ const HS_PARTNERS = [
     "name": "Google Cloud Platform (GCP)",
     "stage": "1",
     "cat": "Cloud & Infrastructure",
-    "desc": "GCP is Google's enterprise cloud platform offering compute, storage, data analytics, and AI/ML services with FedRAMP-authorized government cloud options. Google Cloud has significantly expanded its government presence with Vertex AI and Gemini capabilities.",
+    "desc": "GCP is Google's enterprise cloud platform offering compute, storage, data analytics, and AI/ML services with FedRAMP-authorized government cloud options including Vertex AI and Gemini capabilities.",
     "solutions": [
       "Cloud Infrastructure (IaaS)",
       "Google Workspace",
@@ -581,7 +674,7 @@ const HS_PARTNERS = [
     "name": "ZScaler",
     "stage": "1",
     "cat": "Cybersecurity",
-    "desc": "Zscaler is a cloud-native cybersecurity company and a leader in Zero Trust Network Access (ZTNA) and SASE. It replaces traditional VPNs by routing all traffic through its cloud security platform, ensuring users connect directly to applications without touching the corporate network.",
+    "desc": "Zscaler is a cloud-native cybersecurity leader in Zero Trust Network Access (ZTNA) and SASE. It replaces traditional VPNs by routing all traffic through its cloud security platform, ensuring users connect directly to applications securely.",
     "solutions": [
       "Zero Trust Network Access (ZTNA)",
       "SASE Platform",
@@ -592,10 +685,10 @@ const HS_PARTNERS = [
   },
   {
     "id": "314692364014",
-    "name": "Accela (new record)",
+    "name": "Accela (new)",
     "stage": "1",
     "cat": "Digital Government",
-    "desc": "Accela provides a civic engagement platform for government agencies, supporting permitting, licensing, inspections, and regulatory management. Widely adopted by state and local governments to digitize public-facing services.",
+    "desc": "Accela provides a civic engagement platform for government agencies, supporting permitting, licensing, inspections, and regulatory management.",
     "solutions": [
       "Permitting & Licensing",
       "Code Enforcement",
@@ -607,9 +700,9 @@ const HS_PARTNERS = [
   {
     "id": "314947056373",
     "name": "Industrial Defender",
-    "stage": "3",
+    "stage": "2",
     "cat": "Cybersecurity",
-    "desc": "Industrial Defender provides cybersecurity solutions for operational technology (OT) and industrial control systems (ICS), helping critical infrastructure organizations achieve visibility, compliance, and security across their OT environments.",
+    "desc": "Industrial Defender provides cybersecurity solutions for operational technology (OT) and industrial control systems (ICS), helping critical infrastructure organizations achieve visibility, compliance, and security.",
     "solutions": [
       "OT/ICS Cybersecurity",
       "Industrial Asset Management",
@@ -623,7 +716,7 @@ const HS_PARTNERS = [
     "name": "FMX",
     "stage": "1",
     "cat": "ITSM & Asset Management",
-    "desc": "FMX provides a cloud-based facilities and maintenance management platform for education, government, and property management organizations. It simplifies work order management, preventive maintenance, and asset tracking through an intuitive interface.",
+    "desc": "FMX provides a cloud-based facilities and maintenance management platform for education, government, and property management organizations. It simplifies work order management, preventive maintenance, and asset tracking.",
     "solutions": [
       "Facilities Management",
       "Work Order Management",
@@ -637,7 +730,7 @@ const HS_PARTNERS = [
     "name": "Huntress",
     "stage": "1",
     "cat": "Cybersecurity",
-    "desc": "Huntress is a managed cybersecurity platform providing threat detection, endpoint protection, and managed security operations specifically designed for small and mid-size businesses and MSP-served environments. It focuses on detecting and remediating persistent footholds and ransomware.",
+    "desc": "Huntress is a managed cybersecurity platform providing threat detection, endpoint protection, and managed security operations specifically designed for SMB and MSP-served environments, focusing on ransomware and persistent threats.",
     "solutions": [
       "Managed Endpoint Detection & Response (EDR)",
       "Ransomware Detection",
@@ -805,7 +898,7 @@ const HS_PARTNERS = [
     "name": "WP Engine",
     "stage": "3",
     "cat": "Cloud & Infrastructure",
-    "desc": "WP Engine provides managed WordPress hosting and digital experience solutions, offering secure, scalable, and high-performance hosting for websites and web applications.",
+    "desc": "WP Engine provides managed WordPress hosting and digital experience solutions offering secure, scalable, and high-performance hosting.",
     "solutions": [
       "Managed WordPress Hosting",
       "Web Application Hosting",
@@ -1741,7 +1834,7 @@ const HS_PARTNERS = [
   {
     "id": "304980732622",
     "name": "ArcGIS",
-    "stage": "1",
+    "stage": "2",
     "cat": "GIS & Engineering",
     "desc": "ArcGIS Online is a cloud-based mapping and analysis solution for making maps, analyzing data, and sharing geospatial information.",
     "solutions": [
