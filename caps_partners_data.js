@@ -16,11 +16,40 @@
 //   2 stage changes: ArcGIS (Applied->In Process), Industrial Defender (Completed->In Process)
 // ═══════════════════════════════════════════════════════════════
 
-const CAPS_DATA_SNAPSHOT_TS  = "2026-08-27T12:34:41Z";
-const CAPS_HS_LAST_MODIFIED  = "2026-08-25T18:19:14.544Z";
-const CAPS_TOTAL_RECORDS     = 103;
+const CAPS_DATA_SNAPSHOT_TS  = "2026-10-26T14:14:15Z";
+const CAPS_HS_LAST_MODIFIED  = "2026-10-26T14:12:37.292Z";
+const CAPS_TOTAL_RECORDS     = 104;
 
 const HS_PARTNERS = [
+  {
+    "id": "341253359349",
+    "name": "Lenovo 360",
+    "stage": "3",
+    "cat": "Cloud & Infrastructure",
+    "desc": "Lenovo 360 is Lenovo's reseller partner framework, giving partners access to Lenovo's portfolio of laptops, desktops, workstations, servers, storage, and data center infrastructure, along with device-as-a-service and lifecycle services.",
+    "solutions": [
+      "End-User Devices (Laptops, Desktops, Workstations)",
+      "Servers & Data Center Infrastructure",
+      "Storage Solutions",
+      "Device-as-a-Service",
+      "Hardware Lifecycle Services"
+    ]
+  },
+  {
+    "id": "337799925445",
+    "name": "Check Point",
+    "stage": "3",
+    "cat": "Cybersecurity",
+    "desc": "Check Point Software provides enterprise cybersecurity solutions across network security, cloud security, endpoint protection, email security, SASE, Zero Trust access, and centralized security management through a unified platform.",
+    "solutions": [
+      "Next-Generation Firewall (NGFW)",
+      "Cloud Security (CloudGuard)",
+      "Endpoint Protection (Harmony)",
+      "Email Security",
+      "SASE & Zero Trust Access",
+      "Unified Security Management"
+    ]
+  },
   {
     "id": "330239284974",
     "name": "SOPHOS",
@@ -192,7 +221,7 @@ const HS_PARTNERS = [
   {
     "id": "314945672945",
     "name": "Okta",
-    "stage": "1",
+    "stage": "2",
     "cat": "Cybersecurity",
     "desc": "Okta is a leading cloud-based identity and access management (IAM) platform providing Single Sign-On (SSO), Multi-Factor Authentication (MFA), and identity governance. FedRAMP authorized and widely specified in government Zero Trust RFPs.",
     "solutions": [
@@ -262,7 +291,7 @@ const HS_PARTNERS = [
   {
     "id": "314692364016",
     "name": "Tyler Technologies",
-    "stage": "1",
+    "stage": "4",
     "cat": "Digital Government",
     "desc": "Tyler Technologies is the largest software company in the US focused exclusively on the public sector, providing ERP, financials, courts and justice, public safety, and citizen engagement platforms to thousands of county and municipal government agencies.",
     "solutions": [
@@ -276,7 +305,7 @@ const HS_PARTNERS = [
   {
     "id": "315544873708",
     "name": "ZScaler",
-    "stage": "1",
+    "stage": "4",
     "cat": "Cybersecurity",
     "desc": "Zscaler is a cloud-native cybersecurity leader in Zero Trust Network Access (ZTNA) and SASE. It replaces traditional VPNs by routing all traffic through its cloud security platform, ensuring users connect directly to applications securely.",
     "solutions": [
@@ -289,7 +318,7 @@ const HS_PARTNERS = [
   },
   {
     "id": "314692364014",
-    "name": "Accela (new)",
+    "name": "Accela",
     "stage": "1",
     "cat": "Digital Government",
     "desc": "Accela provides a civic engagement platform for government agencies, supporting permitting, licensing, inspections, and regulatory management.",
@@ -304,7 +333,7 @@ const HS_PARTNERS = [
   {
     "id": "314947056373",
     "name": "Industrial Defender",
-    "stage": "2",
+    "stage": "3",
     "cat": "Cybersecurity",
     "desc": "Industrial Defender provides cybersecurity solutions for operational technology (OT) and industrial control systems (ICS), helping critical infrastructure organizations achieve visibility, compliance, and security.",
     "solutions": [
@@ -346,7 +375,7 @@ const HS_PARTNERS = [
   {
     "id": "305375109849",
     "name": "NinjaOne",
-    "stage": "1",
+    "stage": "2",
     "cat": "ITSM & Asset Management",
     "desc": "NinjaOne provides remote monitoring and management (RMM), patch management, and endpoint management solutions for IT operations and MSPs.",
     "solutions": [
@@ -635,20 +664,6 @@ const HS_PARTNERS = [
     ]
   },
   {
-    "id": "305377269476",
-    "name": "Accela",
-    "stage": "1",
-    "cat": "Digital Government",
-    "desc": "Accela provides a civic engagement platform for government agencies, supporting permitting, licensing, inspections, and regulatory management.",
-    "solutions": [
-      "Permitting & Licensing Platform",
-      "Code Enforcement",
-      "Inspections Management",
-      "Regulatory Compliance",
-      "Civic Engagement Platform"
-    ]
-  },
-  {
     "id": "305377989356",
     "name": "Icertis",
     "stage": "1",
@@ -719,7 +734,7 @@ const HS_PARTNERS = [
   {
     "id": "305455895266",
     "name": "Zoho",
-    "stage": "1",
+    "stage": "3",
     "cat": "CRM & Business Apps",
     "desc": "Zoho provides a suite of business applications including CRM, finance, HR, and collaboration tools for organizations of all sizes.",
     "solutions": [
@@ -844,7 +859,7 @@ const HS_PARTNERS = [
   {
     "id": "305110128362",
     "name": "SentinelOne",
-    "stage": "1",
+    "stage": "2",
     "cat": "Cybersecurity",
     "desc": "SentinelOne provides AI-powered endpoint protection, detection, and response (EDR/XDR) solutions for enterprise cybersecurity.",
     "solutions": [
@@ -900,7 +915,7 @@ const HS_PARTNERS = [
   {
     "id": "305206050535",
     "name": "Qualys",
-    "stage": "1",
+    "stage": "2",
     "cat": "Cybersecurity",
     "desc": "Qualys provides cloud-based security and compliance solutions including vulnerability management, asset discovery, and risk assessment.",
     "solutions": [
@@ -1013,7 +1028,7 @@ const HS_PARTNERS = [
   {
     "id": "305205331657",
     "name": "Ingram Micro",
-    "stage": "1",
+    "stage": "2",
     "cat": "Distributors",
     "desc": "Ingram Micro is a global distributor of technology products and services, providing access to hardware, software, cloud, and lifecycle solutions.",
     "solutions": [
